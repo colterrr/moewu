@@ -4,9 +4,12 @@
 #include "stdlib.h"
 #include "instance.h"
 //周期模式
-const uint8_t periodic_set_high[2] = {0x27, 0x37};   //10Hz
-const uint8_t periodic_set_medium[2] = {0x23, 0x22}; //4Hz
-const uint8_t periodic_set_low[2] = {0x22, 0x2B};    //2Hz
+const uint8_t periodic_set[] = {0x20, 0x32, 0x20, 0x24, 0x20, 0x2F,\
+                                0x21, 0x30, 0x21, 0x26, 0x21, 0x2D,\
+                                0x22, 0x36, 0x22, 0x20, 0x22, 0x2B,\
+                                0x23, 0x34, 0x23, 0x22, 0x23, 0x29,\
+                                0x27, 0x37, 0x27, 0x21, 0x27, 0x2A};
+
 const uint8_t periodic_fetch[2] = {0xE0, 0x00};
 const uint8_t periodic_break[2] = {0x30, 0x93};
 
@@ -24,10 +27,10 @@ SHT_data my_SHT_data;
 uint8_t SHT_txbuffer[10] = {};
 uint8_t SHT_rxbuffer[10] = {};
 
-error_handle_type SHT_sensor_set_high(software_IIC_Port* port)
+error_handle_type SHT_sensor_set_periodic(software_IIC_Port* port, setting_periodic_mode mode, uint8_t ADDR)
 {
-    port->slave_ADDR = 0x45;
-    memcpy(SHT_txbuffer, periodic_set_high, 2);
+    port->slave_ADDR = ADDR;
+    memcpy(SHT_txbuffer, periodic_set + mode * 2, 2);
     Master_Transmit(port, SHT_txbuffer, 2);
     if(port->status == IIC_ERR){
         return trans_error;
@@ -37,9 +40,9 @@ error_handle_type SHT_sensor_set_high(software_IIC_Port* port)
     }
 }
 
-error_handle_type SHT_sensor_break(software_IIC_Port* port)
+error_handle_type SHT_sensor_break(software_IIC_Port* port, uint8_t ADDR)
 {
-    port->slave_ADDR = 0x45;
+    port->slave_ADDR = ADDR;
     memcpy(SHT_txbuffer, periodic_break, 2);
     Master_Transmit(port, SHT_txbuffer, 2);
     if(port->status == IIC_ERR){
@@ -58,9 +61,10 @@ void SHT_arr_Create(SHT_data* data_obj)
     data_obj->pdata_real = malloc(num * sizeof(real_data));
 }
 
-error_handle_type SHT_sensor_data_handle(software_IIC_Port* port, temp_humid_data* data_obj)
+error_handle_type SHT_sensor_data_handle(software_IIC_Port* port, temp_humid_data* data_obj, uint8_t ADDR)
 {
-    port->slave_ADDR = 0x45;
+    port->slave_ADDR = ADDR;
+    memcpy(SHT_txbuffer, periodic_fetch, 2);
     Master_Complex(port, SHT_txbuffer, 2, SHT_rxbuffer, 6);
     if (port->status == IIC_ERR) return trans_error;
 
@@ -85,5 +89,13 @@ void SHT_data_calc(SHT_data* data_obj)
 void SHT_sensor_Init(void)
 {
     database.SHT_data_p = &my_SHT_data;
+    my_SHT_data.num = SHT_NUM;
     SHT_arr_Create(&my_SHT_data);
+    SHT_sensor_set_periodic(database.IIC_Port_p, Medium_1, 0x45);
+}
+
+void sht_sensor_task(void)
+{
+    database.SHT_sta = SHT_sensor_data_handle(database.IIC_Port_p, my_SHT_data.pdata, 0x45);
+    SHT_data_calc(&my_SHT_data);
 }

@@ -2,7 +2,9 @@
 #include "stdlib.h"
 #include "string.h"
 #include "myfunc.h"
+#include "instance.h"
 
+software_IIC_Port my_port;
 /***SDA输出输入模式改变***/
 
 void SDA_Set_Output()
@@ -235,3 +237,8 @@ void Master_Complex(software_IIC_Port* port, uint8_t* pdata, uint16_t len_t, uin
 }
 
 /***-----------------------------------------------***/
+
+void soft_IIC_Init(void)
+{
+    database.IIC_Port_p = &my_port;
+}

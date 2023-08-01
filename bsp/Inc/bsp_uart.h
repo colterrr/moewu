@@ -4,8 +4,8 @@
 #include "stdint.h"
 #include "usart.h"
 
-#define CO2_PORT 1
-#define ESP_PORT 0
+#define ESP_PORT 0 //huart1
+#define CO2_PORT 1 //huart2
 
 #define MAX_BUF_LEN_R 512
 #define MAX_BUF_LEN_T 128
@@ -24,7 +24,7 @@ typedef struct BSP_UART_Type_s
 #pragma pack()
 
 void BSP_UART_Init(void);
-void BSP_UART_send(UART_HandleTypeDef* huart, uint8_t* txbuffer, uint16_t len);
+void BSP_UART_send(uint8_t port_index, uint8_t* pdata, uint16_t len);
 void BSP_UART_IRQHandler(UART_HandleTypeDef* huart);
 
 void BSP_UART_registerfunc(rx_handle_func* user_func, uint8_t port_index);

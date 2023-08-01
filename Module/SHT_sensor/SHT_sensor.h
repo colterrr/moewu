@@ -5,10 +5,28 @@
 #include "error_handle.h"
 #include "software_IIC.h"
 
-extern const uint8_t periodic_set_high[2];   //10Hz
-extern const uint8_t periodic_set_medium[2]; //4Hz
-extern const uint8_t periodic_set_low[2];    //2Hz
-extern const uint8_t periodic_fetch[2];
+#define SHT_NUM 1 //传感器数量
+typedef enum setting_periodic_mode_e
+{
+    High_05 = 0,
+    Medium_05,
+    Low_05,
+
+    High_1,
+    Medium_1,
+    Low_1,
+
+    High_2,
+    Medium_2,
+    Low_2,
+    High_4,
+    Medium_4,
+    Low_4,
+
+    High_10,
+    Medium_10,
+    Low_10
+}setting_periodic_mode;
 
 #pragma pack(1)
 typedef struct temp_humid_data_s
@@ -32,10 +50,11 @@ typedef struct SHT_data_s
 }SHT_data;
 #pragma pack()
 
-error_handle_type SHT_sensor_data_handle(software_IIC_Port* port, temp_humid_data* data_obj);
-error_handle_type SHT_sensor_set_high(software_IIC_Port* port);
-error_handle_type SHT_sensor_break(software_IIC_Port* port);
+error_handle_type SHT_sensor_data_handle(software_IIC_Port* port, temp_humid_data* data_obj, uint8_t ADDR);
+error_handle_type SHT_sensor_set_periodic(software_IIC_Port* port, setting_periodic_mode mode, uint8_t ADDR);
+error_handle_type SHT_sensor_break(software_IIC_Port* port, uint8_t ADDR);
 
+void sht_sensor_task(void);
 void SHT_sensor_Init(void);
 void SHT_data_calc(SHT_data* data_obj);
 

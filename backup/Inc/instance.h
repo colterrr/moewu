@@ -37,6 +37,8 @@ typedef struct instance_s
     error_handle_type SHT_sta;
     error_handle_type UV_sta;
     error_handle_type CO2_sta;
+
+    software_IIC_Port* IIC_Port_p;
 }instance;
 
 extern instance database;

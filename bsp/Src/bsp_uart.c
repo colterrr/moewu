@@ -1,4 +1,5 @@
 #include "bsp_uart.h"
+#include "string.h"
 
 BSP_UART_Type uart_port[MAX_PORT_NUM] = {};
 
@@ -41,9 +42,10 @@ void BSP_UART_IRQHandler(UART_HandleTypeDef* huart)
 
 /***------发送------***/
 
-void BSP_UART_send(UART_HandleTypeDef* huart, uint8_t* txbuffer, uint16_t len)
+void BSP_UART_send(uint8_t port_index, uint8_t* pdata, uint16_t len)
 {
-    HAL_UART_Transmit_IT(huart, txbuffer, len);
+    memcpy(uart_port[port_index].txbuffer, pdata, len);
+    HAL_UART_Transmit_IT(uart_port[port_index].huart, uart_port[port_index].txbuffer, len);
 }
 
 void BSP_UART_Txcpltcallback(UART_HandleTypeDef* huart)
