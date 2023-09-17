@@ -11,7 +11,7 @@
 
 #include "error_handle.h"
 
-//接口配置
+// 接口配置
 // IIC_SCL PB6
 // IIC_SDA PB7
 
@@ -28,6 +28,9 @@
 //SPI1 MOSI PA7
 //SPI1 NSS PE7
 
+// 参数配置
+//SPI1  MSB_first 8_bit_frame
+
 typedef struct instance_s
 {
     SHT_data* SHT_data_p;
@@ -37,8 +40,6 @@ typedef struct instance_s
     error_handle_type SHT_sta;
     error_handle_type UV_sta;
     error_handle_type CO2_sta;
-
-    software_IIC_Port* IIC_Port_p;
 }instance;
 
 extern instance database;

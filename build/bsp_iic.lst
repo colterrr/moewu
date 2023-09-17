@@ -1,0 +1,1942 @@
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bsp_iic.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.SDA_Set_Output,"ax",%progbits
+  20              		.align	1
+  21              		.global	SDA_Set_Output
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	SDA_Set_Output:
+  27              	.LFB235:
+  28              		.file 1 "bsp/Src/bsp_iic.c"
+   1:bsp/Src/bsp_iic.c **** #include "bsp_iic.h"
+   2:bsp/Src/bsp_iic.c **** #include "stdlib.h"
+   3:bsp/Src/bsp_iic.c **** #include "string.h"
+   4:bsp/Src/bsp_iic.c **** #include "myfunc.h"
+   5:bsp/Src/bsp_iic.c **** #include "instance.h"
+   6:bsp/Src/bsp_iic.c **** 
+   7:bsp/Src/bsp_iic.c **** software_IIC_Port IIC_port[IIC_MAX_NUM];
+   8:bsp/Src/bsp_iic.c **** 
+   9:bsp/Src/bsp_iic.c **** GPIO_TypeDef* GPIOx_CL;
+  10:bsp/Src/bsp_iic.c **** GPIO_TypeDef* GPIOx_DA;
+  11:bsp/Src/bsp_iic.c **** uint16_t GPIO_Pin_CL;
+  12:bsp/Src/bsp_iic.c **** uint16_t GPIO_Pin_DA;
+  13:bsp/Src/bsp_iic.c **** 
+  14:bsp/Src/bsp_iic.c **** /***SDA输出输入模式改变***/
+  15:bsp/Src/bsp_iic.c **** 
+  16:bsp/Src/bsp_iic.c **** void SDA_Set_Output()
+  17:bsp/Src/bsp_iic.c **** {
+  29              		.loc 1 17 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 86B0     		sub	sp, sp, #24
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 32
+  18:bsp/Src/bsp_iic.c ****     GPIO_InitTypeDef config ={0};
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 2
+
+
+  41              		.loc 1 18 5 view .LVU1
+  42              		.loc 1 18 22 is_stmt 0 view .LVU2
+  43 0004 0023     		movs	r3, #0
+  44 0006 0193     		str	r3, [sp, #4]
+  45 0008 0293     		str	r3, [sp, #8]
+  46 000a 0393     		str	r3, [sp, #12]
+  47 000c 0493     		str	r3, [sp, #16]
+  48 000e 0593     		str	r3, [sp, #20]
+  19:bsp/Src/bsp_iic.c ****     config.Mode = GPIO_MODE_OUTPUT_PP;
+  49              		.loc 1 19 5 is_stmt 1 view .LVU3
+  50              		.loc 1 19 17 is_stmt 0 view .LVU4
+  51 0010 0123     		movs	r3, #1
+  52 0012 0293     		str	r3, [sp, #8]
+  20:bsp/Src/bsp_iic.c ****     config.Pin = GPIO_Pin_DA;
+  53              		.loc 1 20 5 is_stmt 1 view .LVU5
+  54              		.loc 1 20 16 is_stmt 0 view .LVU6
+  55 0014 074B     		ldr	r3, .L3
+  56 0016 1988     		ldrh	r1, [r3]
+  57 0018 0191     		str	r1, [sp, #4]
+  21:bsp/Src/bsp_iic.c ****     config.Pull = GPIO_NOPULL;
+  58              		.loc 1 21 5 is_stmt 1 view .LVU7
+  22:bsp/Src/bsp_iic.c ****     config.Speed = GPIO_SPEED_FREQ_HIGH;
+  59              		.loc 1 22 5 view .LVU8
+  60              		.loc 1 22 18 is_stmt 0 view .LVU9
+  61 001a 0223     		movs	r3, #2
+  62 001c 0493     		str	r3, [sp, #16]
+  23:bsp/Src/bsp_iic.c ****     HAL_GPIO_DeInit(GPIOx_DA, GPIO_Pin_DA);
+  63              		.loc 1 23 5 is_stmt 1 view .LVU10
+  64 001e 064C     		ldr	r4, .L3+4
+  65 0020 2068     		ldr	r0, [r4]
+  66 0022 FFF7FEFF 		bl	HAL_GPIO_DeInit
+  67              	.LVL0:
+  24:bsp/Src/bsp_iic.c ****     HAL_GPIO_Init(GPIOx_DA, &config);
+  68              		.loc 1 24 5 view .LVU11
+  69 0026 01A9     		add	r1, sp, #4
+  70 0028 2068     		ldr	r0, [r4]
+  71 002a FFF7FEFF 		bl	HAL_GPIO_Init
+  72              	.LVL1:
+  25:bsp/Src/bsp_iic.c **** }
+  73              		.loc 1 25 1 is_stmt 0 view .LVU12
+  74 002e 06B0     		add	sp, sp, #24
+  75              	.LCFI2:
+  76              		.cfi_def_cfa_offset 8
+  77              		@ sp needed
+  78 0030 10BD     		pop	{r4, pc}
+  79              	.L4:
+  80 0032 00BF     		.align	2
+  81              	.L3:
+  82 0034 00000000 		.word	.LANCHOR0
+  83 0038 00000000 		.word	.LANCHOR1
+  84              		.cfi_endproc
+  85              	.LFE235:
+  87              		.section	.text.SDA_Set_Input,"ax",%progbits
+  88              		.align	1
+  89              		.global	SDA_Set_Input
+  90              		.syntax unified
+  91              		.thumb
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 3
+
+
+  92              		.thumb_func
+  94              	SDA_Set_Input:
+  95              	.LFB236:
+  26:bsp/Src/bsp_iic.c **** 
+  27:bsp/Src/bsp_iic.c **** void SDA_Set_Input()
+  28:bsp/Src/bsp_iic.c **** {
+  96              		.loc 1 28 1 is_stmt 1 view -0
+  97              		.cfi_startproc
+  98              		@ args = 0, pretend = 0, frame = 24
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100 0000 10B5     		push	{r4, lr}
+ 101              	.LCFI3:
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 4, -8
+ 104              		.cfi_offset 14, -4
+ 105 0002 86B0     		sub	sp, sp, #24
+ 106              	.LCFI4:
+ 107              		.cfi_def_cfa_offset 32
+  29:bsp/Src/bsp_iic.c ****     GPIO_InitTypeDef config = {0};
+ 108              		.loc 1 29 5 view .LVU14
+ 109              		.loc 1 29 22 is_stmt 0 view .LVU15
+ 110 0004 0023     		movs	r3, #0
+ 111 0006 0193     		str	r3, [sp, #4]
+ 112 0008 0293     		str	r3, [sp, #8]
+ 113 000a 0393     		str	r3, [sp, #12]
+ 114 000c 0493     		str	r3, [sp, #16]
+ 115 000e 0593     		str	r3, [sp, #20]
+  30:bsp/Src/bsp_iic.c ****     config.Mode = GPIO_MODE_INPUT;
+ 116              		.loc 1 30 5 is_stmt 1 view .LVU16
+  31:bsp/Src/bsp_iic.c ****     config.Pin = GPIO_Pin_DA;
+ 117              		.loc 1 31 5 view .LVU17
+ 118              		.loc 1 31 16 is_stmt 0 view .LVU18
+ 119 0010 074B     		ldr	r3, .L7
+ 120 0012 1988     		ldrh	r1, [r3]
+ 121 0014 0191     		str	r1, [sp, #4]
+  32:bsp/Src/bsp_iic.c ****     config.Pull = GPIO_NOPULL;
+ 122              		.loc 1 32 5 is_stmt 1 view .LVU19
+  33:bsp/Src/bsp_iic.c ****     config.Speed = GPIO_SPEED_FREQ_HIGH;
+ 123              		.loc 1 33 5 view .LVU20
+ 124              		.loc 1 33 18 is_stmt 0 view .LVU21
+ 125 0016 0223     		movs	r3, #2
+ 126 0018 0493     		str	r3, [sp, #16]
+  34:bsp/Src/bsp_iic.c ****     HAL_GPIO_DeInit(GPIOx_DA, GPIO_Pin_DA);
+ 127              		.loc 1 34 5 is_stmt 1 view .LVU22
+ 128 001a 064C     		ldr	r4, .L7+4
+ 129 001c 2068     		ldr	r0, [r4]
+ 130 001e FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 131              	.LVL2:
+  35:bsp/Src/bsp_iic.c ****     HAL_GPIO_Init(GPIOx_DA, &config);
+ 132              		.loc 1 35 5 view .LVU23
+ 133 0022 01A9     		add	r1, sp, #4
+ 134 0024 2068     		ldr	r0, [r4]
+ 135 0026 FFF7FEFF 		bl	HAL_GPIO_Init
+ 136              	.LVL3:
+  36:bsp/Src/bsp_iic.c **** }
+ 137              		.loc 1 36 1 is_stmt 0 view .LVU24
+ 138 002a 06B0     		add	sp, sp, #24
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 4
+
+
+ 139              	.LCFI5:
+ 140              		.cfi_def_cfa_offset 8
+ 141              		@ sp needed
+ 142 002c 10BD     		pop	{r4, pc}
+ 143              	.L8:
+ 144 002e 00BF     		.align	2
+ 145              	.L7:
+ 146 0030 00000000 		.word	.LANCHOR0
+ 147 0034 00000000 		.word	.LANCHOR1
+ 148              		.cfi_endproc
+ 149              	.LFE236:
+ 151              		.section	.text.Master_Start,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	Master_Start
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	Master_Start:
+ 159              	.LFB237:
+  37:bsp/Src/bsp_iic.c **** 
+  38:bsp/Src/bsp_iic.c **** /***-------------------***/
+  39:bsp/Src/bsp_iic.c **** 
+  40:bsp/Src/bsp_iic.c **** 
+  41:bsp/Src/bsp_iic.c **** /***开始信号S和结束信号P***/
+  42:bsp/Src/bsp_iic.c **** 
+  43:bsp/Src/bsp_iic.c **** void Master_Start()
+  44:bsp/Src/bsp_iic.c **** {
+ 160              		.loc 1 44 1 is_stmt 1 view -0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 165              	.LCFI6:
+ 166              		.cfi_def_cfa_offset 24
+ 167              		.cfi_offset 3, -24
+ 168              		.cfi_offset 4, -20
+ 169              		.cfi_offset 5, -16
+ 170              		.cfi_offset 6, -12
+ 171              		.cfi_offset 7, -8
+ 172              		.cfi_offset 14, -4
+  45:bsp/Src/bsp_iic.c ****     SDA_Set_Output();
+ 173              		.loc 1 45 5 view .LVU26
+ 174 0002 FFF7FEFF 		bl	SDA_Set_Output
+ 175              	.LVL4:
+  46:bsp/Src/bsp_iic.c ****     H_SCL;
+ 176              		.loc 1 46 5 view .LVU27
+ 177 0006 0F4D     		ldr	r5, .L11
+ 178 0008 0F4C     		ldr	r4, .L11+4
+ 179 000a 0122     		movs	r2, #1
+ 180 000c 2988     		ldrh	r1, [r5]
+ 181 000e 2068     		ldr	r0, [r4]
+ 182 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 183              	.LVL5:
+  47:bsp/Src/bsp_iic.c ****     H_SDA;
+ 184              		.loc 1 47 5 view .LVU28
+ 185 0014 0D4F     		ldr	r7, .L11+8
+ 186 0016 0E4E     		ldr	r6, .L11+12
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 5
+
+
+ 187 0018 0122     		movs	r2, #1
+ 188 001a 3988     		ldrh	r1, [r7]
+ 189 001c 3068     		ldr	r0, [r6]
+ 190 001e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 191              	.LVL6:
+  48:bsp/Src/bsp_iic.c ****     delay_us(2);//t_SU-STA 2
+ 192              		.loc 1 48 5 view .LVU29
+ 193 0022 0220     		movs	r0, #2
+ 194 0024 FFF7FEFF 		bl	delay_us
+ 195              	.LVL7:
+  49:bsp/Src/bsp_iic.c ****     L_SDA;
+ 196              		.loc 1 49 5 view .LVU30
+ 197 0028 0022     		movs	r2, #0
+ 198 002a 3988     		ldrh	r1, [r7]
+ 199 002c 3068     		ldr	r0, [r6]
+ 200 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 201              	.LVL8:
+  50:bsp/Src/bsp_iic.c ****     delay_us(2);//t_HD-STA 2
+ 202              		.loc 1 50 5 view .LVU31
+ 203 0032 0220     		movs	r0, #2
+ 204 0034 FFF7FEFF 		bl	delay_us
+ 205              	.LVL9:
+  51:bsp/Src/bsp_iic.c ****     L_SCL; //拉低SCL，利于SDA电平变化
+ 206              		.loc 1 51 5 view .LVU32
+ 207 0038 0022     		movs	r2, #0
+ 208 003a 2988     		ldrh	r1, [r5]
+ 209 003c 2068     		ldr	r0, [r4]
+ 210 003e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 211              	.LVL10:
+  52:bsp/Src/bsp_iic.c **** }
+ 212              		.loc 1 52 1 is_stmt 0 view .LVU33
+ 213 0042 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 214              	.L12:
+ 215              		.align	2
+ 216              	.L11:
+ 217 0044 00000000 		.word	.LANCHOR2
+ 218 0048 00000000 		.word	.LANCHOR3
+ 219 004c 00000000 		.word	.LANCHOR0
+ 220 0050 00000000 		.word	.LANCHOR1
+ 221              		.cfi_endproc
+ 222              	.LFE237:
+ 224              		.section	.text.Master_Stop,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	Master_Stop
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 231              	Master_Stop:
+ 232              	.LFB238:
+  53:bsp/Src/bsp_iic.c **** 
+  54:bsp/Src/bsp_iic.c **** void Master_Stop()
+  55:bsp/Src/bsp_iic.c **** {
+ 233              		.loc 1 55 1 is_stmt 1 view -0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 6
+
+
+ 238              	.LCFI7:
+ 239              		.cfi_def_cfa_offset 24
+ 240              		.cfi_offset 3, -24
+ 241              		.cfi_offset 4, -20
+ 242              		.cfi_offset 5, -16
+ 243              		.cfi_offset 6, -12
+ 244              		.cfi_offset 7, -8
+ 245              		.cfi_offset 14, -4
+  56:bsp/Src/bsp_iic.c ****     SDA_Set_Output();
+ 246              		.loc 1 56 5 view .LVU35
+ 247 0002 FFF7FEFF 		bl	SDA_Set_Output
+ 248              	.LVL11:
+  57:bsp/Src/bsp_iic.c ****     L_SCL;
+ 249              		.loc 1 57 5 view .LVU36
+ 250 0006 0F4F     		ldr	r7, .L15
+ 251 0008 0F4E     		ldr	r6, .L15+4
+ 252 000a 0022     		movs	r2, #0
+ 253 000c 3988     		ldrh	r1, [r7]
+ 254 000e 3068     		ldr	r0, [r6]
+ 255 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 256              	.LVL12:
+  58:bsp/Src/bsp_iic.c ****     L_SDA;
+ 257              		.loc 1 58 5 view .LVU37
+ 258 0014 0D4D     		ldr	r5, .L15+8
+ 259 0016 0E4C     		ldr	r4, .L15+12
+ 260 0018 0022     		movs	r2, #0
+ 261 001a 2988     		ldrh	r1, [r5]
+ 262 001c 2068     		ldr	r0, [r4]
+ 263 001e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 264              	.LVL13:
+  59:bsp/Src/bsp_iic.c ****     delay_us(4);//t_LOW 4
+ 265              		.loc 1 59 5 view .LVU38
+ 266 0022 0420     		movs	r0, #4
+ 267 0024 FFF7FEFF 		bl	delay_us
+ 268              	.LVL14:
+  60:bsp/Src/bsp_iic.c ****     H_SCL;
+ 269              		.loc 1 60 5 view .LVU39
+ 270 0028 0122     		movs	r2, #1
+ 271 002a 3988     		ldrh	r1, [r7]
+ 272 002c 3068     		ldr	r0, [r6]
+ 273 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 274              	.LVL15:
+  61:bsp/Src/bsp_iic.c ****     delay_us(2);//t_SU-STO 2
+ 275              		.loc 1 61 5 view .LVU40
+ 276 0032 0220     		movs	r0, #2
+ 277 0034 FFF7FEFF 		bl	delay_us
+ 278              	.LVL16:
+  62:bsp/Src/bsp_iic.c ****     H_SDA;
+ 279              		.loc 1 62 5 view .LVU41
+ 280 0038 0122     		movs	r2, #1
+ 281 003a 2988     		ldrh	r1, [r5]
+ 282 003c 2068     		ldr	r0, [r4]
+ 283 003e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 284              	.LVL17:
+  63:bsp/Src/bsp_iic.c **** }
+ 285              		.loc 1 63 1 is_stmt 0 view .LVU42
+ 286 0042 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 7
+
+
+ 287              	.L16:
+ 288              		.align	2
+ 289              	.L15:
+ 290 0044 00000000 		.word	.LANCHOR2
+ 291 0048 00000000 		.word	.LANCHOR3
+ 292 004c 00000000 		.word	.LANCHOR0
+ 293 0050 00000000 		.word	.LANCHOR1
+ 294              		.cfi_endproc
+ 295              	.LFE238:
+ 297              		.section	.text.Master_N_ACK,"ax",%progbits
+ 298              		.align	1
+ 299              		.global	Master_N_ACK
+ 300              		.syntax unified
+ 301              		.thumb
+ 302              		.thumb_func
+ 304              	Master_N_ACK:
+ 305              	.LVL18:
+ 306              	.LFB239:
+  64:bsp/Src/bsp_iic.c **** 
+  65:bsp/Src/bsp_iic.c **** /***---------------------***/
+  66:bsp/Src/bsp_iic.c **** 
+  67:bsp/Src/bsp_iic.c **** 
+  68:bsp/Src/bsp_iic.c **** /***接收应答和发送应答***/
+  69:bsp/Src/bsp_iic.c **** 
+  70:bsp/Src/bsp_iic.c **** void Master_N_ACK(ACK_value sig)
+  71:bsp/Src/bsp_iic.c **** {
+ 307              		.loc 1 71 1 is_stmt 1 view -0
+ 308              		.cfi_startproc
+ 309              		@ args = 0, pretend = 0, frame = 0
+ 310              		@ frame_needed = 0, uses_anonymous_args = 0
+ 311              		.loc 1 71 1 is_stmt 0 view .LVU44
+ 312 0000 38B5     		push	{r3, r4, r5, lr}
+ 313              	.LCFI8:
+ 314              		.cfi_def_cfa_offset 16
+ 315              		.cfi_offset 3, -16
+ 316              		.cfi_offset 4, -12
+ 317              		.cfi_offset 5, -8
+ 318              		.cfi_offset 14, -4
+ 319 0002 0446     		mov	r4, r0
+  72:bsp/Src/bsp_iic.c ****     SDA_Set_Output();
+ 320              		.loc 1 72 5 is_stmt 1 view .LVU45
+ 321 0004 FFF7FEFF 		bl	SDA_Set_Output
+ 322              	.LVL19:
+  73:bsp/Src/bsp_iic.c ****     L_SCL;
+ 323              		.loc 1 73 5 view .LVU46
+ 324 0008 0022     		movs	r2, #0
+ 325 000a 164B     		ldr	r3, .L21
+ 326 000c 1988     		ldrh	r1, [r3]
+ 327 000e 164B     		ldr	r3, .L21+4
+ 328 0010 1868     		ldr	r0, [r3]
+ 329 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 330              	.LVL20:
+  74:bsp/Src/bsp_iic.c ****     delay_us(2);
+ 331              		.loc 1 74 5 view .LVU47
+ 332 0016 0220     		movs	r0, #2
+ 333 0018 FFF7FEFF 		bl	delay_us
+ 334              	.LVL21:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 8
+
+
+  75:bsp/Src/bsp_iic.c ****     if(sig)
+ 335              		.loc 1 75 5 view .LVU48
+ 336              		.loc 1 75 7 is_stmt 0 view .LVU49
+ 337 001c CCB1     		cbz	r4, .L18
+  76:bsp/Src/bsp_iic.c ****         H_SDA;
+ 338              		.loc 1 76 9 is_stmt 1 view .LVU50
+ 339 001e 0122     		movs	r2, #1
+ 340 0020 124B     		ldr	r3, .L21+8
+ 341 0022 1988     		ldrh	r1, [r3]
+ 342 0024 124B     		ldr	r3, .L21+12
+ 343 0026 1868     		ldr	r0, [r3]
+ 344 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 345              	.LVL22:
+ 346              	.L19:
+  77:bsp/Src/bsp_iic.c ****     else 
+  78:bsp/Src/bsp_iic.c ****         L_SDA;
+  79:bsp/Src/bsp_iic.c ****     delay_us(2);
+ 347              		.loc 1 79 5 view .LVU51
+ 348 002c 0220     		movs	r0, #2
+ 349 002e FFF7FEFF 		bl	delay_us
+ 350              	.LVL23:
+  80:bsp/Src/bsp_iic.c ****     H_SCL;
+ 351              		.loc 1 80 5 view .LVU52
+ 352 0032 0C4D     		ldr	r5, .L21
+ 353 0034 0C4C     		ldr	r4, .L21+4
+ 354 0036 0122     		movs	r2, #1
+ 355 0038 2988     		ldrh	r1, [r5]
+ 356 003a 2068     		ldr	r0, [r4]
+ 357 003c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 358              	.LVL24:
+  81:bsp/Src/bsp_iic.c ****     delay_us(4);
+ 359              		.loc 1 81 5 view .LVU53
+ 360 0040 0420     		movs	r0, #4
+ 361 0042 FFF7FEFF 		bl	delay_us
+ 362              	.LVL25:
+  82:bsp/Src/bsp_iic.c ****     L_SCL;
+ 363              		.loc 1 82 5 view .LVU54
+ 364 0046 0022     		movs	r2, #0
+ 365 0048 2988     		ldrh	r1, [r5]
+ 366 004a 2068     		ldr	r0, [r4]
+ 367 004c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 368              	.LVL26:
+  83:bsp/Src/bsp_iic.c **** }
+ 369              		.loc 1 83 1 is_stmt 0 view .LVU55
+ 370 0050 38BD     		pop	{r3, r4, r5, pc}
+ 371              	.L18:
+  78:bsp/Src/bsp_iic.c ****     delay_us(2);
+ 372              		.loc 1 78 9 is_stmt 1 view .LVU56
+ 373 0052 0022     		movs	r2, #0
+ 374 0054 054B     		ldr	r3, .L21+8
+ 375 0056 1988     		ldrh	r1, [r3]
+ 376 0058 054B     		ldr	r3, .L21+12
+ 377 005a 1868     		ldr	r0, [r3]
+ 378 005c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 379              	.LVL27:
+ 380 0060 E4E7     		b	.L19
+ 381              	.L22:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 9
+
+
+ 382 0062 00BF     		.align	2
+ 383              	.L21:
+ 384 0064 00000000 		.word	.LANCHOR2
+ 385 0068 00000000 		.word	.LANCHOR3
+ 386 006c 00000000 		.word	.LANCHOR0
+ 387 0070 00000000 		.word	.LANCHOR1
+ 388              		.cfi_endproc
+ 389              	.LFE239:
+ 391              		.section	.text.Master_wait_ACK,"ax",%progbits
+ 392              		.align	1
+ 393              		.global	Master_wait_ACK
+ 394              		.syntax unified
+ 395              		.thumb
+ 396              		.thumb_func
+ 398              	Master_wait_ACK:
+ 399              	.LFB240:
+  84:bsp/Src/bsp_iic.c **** 
+  85:bsp/Src/bsp_iic.c **** uint8_t Master_wait_ACK()
+  86:bsp/Src/bsp_iic.c **** {
+ 400              		.loc 1 86 1 view -0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+ 404 0000 38B5     		push	{r3, r4, r5, lr}
+ 405              	.LCFI9:
+ 406              		.cfi_def_cfa_offset 16
+ 407              		.cfi_offset 3, -16
+ 408              		.cfi_offset 4, -12
+ 409              		.cfi_offset 5, -8
+ 410              		.cfi_offset 14, -4
+  87:bsp/Src/bsp_iic.c ****     L_SCL;
+ 411              		.loc 1 87 5 view .LVU58
+ 412 0002 144D     		ldr	r5, .L28
+ 413 0004 144C     		ldr	r4, .L28+4
+ 414 0006 0022     		movs	r2, #0
+ 415 0008 2988     		ldrh	r1, [r5]
+ 416 000a 2068     		ldr	r0, [r4]
+ 417 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 418              	.LVL28:
+  88:bsp/Src/bsp_iic.c ****     SDA_Set_Input();
+ 419              		.loc 1 88 5 view .LVU59
+ 420 0010 FFF7FEFF 		bl	SDA_Set_Input
+ 421              	.LVL29:
+  89:bsp/Src/bsp_iic.c ****     uint16_t outtime = 10000;
+ 422              		.loc 1 89 5 view .LVU60
+  90:bsp/Src/bsp_iic.c ****     delay_us(4);
+ 423              		.loc 1 90 5 view .LVU61
+ 424 0014 0420     		movs	r0, #4
+ 425 0016 FFF7FEFF 		bl	delay_us
+ 426              	.LVL30:
+  91:bsp/Src/bsp_iic.c ****     H_SCL;
+ 427              		.loc 1 91 5 view .LVU62
+ 428 001a 0122     		movs	r2, #1
+ 429 001c 2988     		ldrh	r1, [r5]
+ 430 001e 2068     		ldr	r0, [r4]
+ 431 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 432              	.LVL31:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 10
+
+
+  92:bsp/Src/bsp_iic.c ****     delay_us(4);
+ 433              		.loc 1 92 5 view .LVU63
+ 434 0024 0420     		movs	r0, #4
+ 435 0026 FFF7FEFF 		bl	delay_us
+ 436              	.LVL32:
+  93:bsp/Src/bsp_iic.c ****     while(READ_DA)
+ 437              		.loc 1 93 5 view .LVU64
+ 438              		.loc 1 93 10 view .LVU65
+ 439              		.loc 1 93 11 is_stmt 0 view .LVU66
+ 440 002a 0C4B     		ldr	r3, .L28+8
+ 441 002c 1988     		ldrh	r1, [r3]
+ 442 002e 0C4B     		ldr	r3, .L28+12
+ 443 0030 1868     		ldr	r0, [r3]
+ 444 0032 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 445              	.LVL33:
+ 446              		.loc 1 93 10 view .LVU67
+ 447 0036 48B9     		cbnz	r0, .L27
+ 448 0038 0446     		mov	r4, r0
+  94:bsp/Src/bsp_iic.c ****     {
+  95:bsp/Src/bsp_iic.c ****         if(--outtime)
+  96:bsp/Src/bsp_iic.c ****         {
+  97:bsp/Src/bsp_iic.c ****             Master_Stop();
+  98:bsp/Src/bsp_iic.c ****             return 0xff; //表示err
+  99:bsp/Src/bsp_iic.c ****         }
+ 100:bsp/Src/bsp_iic.c ****     }
+ 101:bsp/Src/bsp_iic.c ****     L_SCL;
+ 449              		.loc 1 101 5 is_stmt 1 view .LVU68
+ 450 003a 0022     		movs	r2, #0
+ 451 003c 054B     		ldr	r3, .L28
+ 452 003e 1988     		ldrh	r1, [r3]
+ 453 0040 054B     		ldr	r3, .L28+4
+ 454 0042 1868     		ldr	r0, [r3]
+ 455 0044 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 456              	.LVL34:
+ 102:bsp/Src/bsp_iic.c ****     return 0;
+ 457              		.loc 1 102 5 view .LVU69
+ 458              	.L25:
+ 103:bsp/Src/bsp_iic.c **** }
+ 459              		.loc 1 103 1 is_stmt 0 view .LVU70
+ 460 0048 2046     		mov	r0, r4
+ 461 004a 38BD     		pop	{r3, r4, r5, pc}
+ 462              	.LVL35:
+ 463              	.L27:
+  95:bsp/Src/bsp_iic.c ****         {
+ 464              		.loc 1 95 9 is_stmt 1 view .LVU71
+  97:bsp/Src/bsp_iic.c ****             return 0xff; //表示err
+ 465              		.loc 1 97 13 view .LVU72
+ 466 004c FFF7FEFF 		bl	Master_Stop
+ 467              	.LVL36:
+  98:bsp/Src/bsp_iic.c ****         }
+ 468              		.loc 1 98 13 view .LVU73
+  98:bsp/Src/bsp_iic.c ****         }
+ 469              		.loc 1 98 20 is_stmt 0 view .LVU74
+ 470 0050 FF24     		movs	r4, #255
+ 471 0052 F9E7     		b	.L25
+ 472              	.L29:
+ 473              		.align	2
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 11
+
+
+ 474              	.L28:
+ 475 0054 00000000 		.word	.LANCHOR2
+ 476 0058 00000000 		.word	.LANCHOR3
+ 477 005c 00000000 		.word	.LANCHOR0
+ 478 0060 00000000 		.word	.LANCHOR1
+ 479              		.cfi_endproc
+ 480              	.LFE240:
+ 482              		.section	.text.Master_Transmit_Byte,"ax",%progbits
+ 483              		.align	1
+ 484              		.global	Master_Transmit_Byte
+ 485              		.syntax unified
+ 486              		.thumb
+ 487              		.thumb_func
+ 489              	Master_Transmit_Byte:
+ 490              	.LVL37:
+ 491              	.LFB241:
+ 104:bsp/Src/bsp_iic.c **** 
+ 105:bsp/Src/bsp_iic.c **** /***------------------***/
+ 106:bsp/Src/bsp_iic.c **** 
+ 107:bsp/Src/bsp_iic.c **** 
+ 108:bsp/Src/bsp_iic.c **** /***发送和接收一个字节数据***/
+ 109:bsp/Src/bsp_iic.c **** 
+ 110:bsp/Src/bsp_iic.c **** void Master_Transmit_Byte(uint8_t Byte)
+ 111:bsp/Src/bsp_iic.c **** {
+ 492              		.loc 1 111 1 is_stmt 1 view -0
+ 493              		.cfi_startproc
+ 494              		@ args = 0, pretend = 0, frame = 0
+ 495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 496              		.loc 1 111 1 is_stmt 0 view .LVU76
+ 497 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 498              	.LCFI10:
+ 499              		.cfi_def_cfa_offset 24
+ 500              		.cfi_offset 3, -24
+ 501              		.cfi_offset 4, -20
+ 502              		.cfi_offset 5, -16
+ 503              		.cfi_offset 6, -12
+ 504              		.cfi_offset 7, -8
+ 505              		.cfi_offset 14, -4
+ 506 0002 0446     		mov	r4, r0
+ 112:bsp/Src/bsp_iic.c ****     SDA_Set_Output();
+ 507              		.loc 1 112 5 is_stmt 1 view .LVU77
+ 508 0004 FFF7FEFF 		bl	SDA_Set_Output
+ 509              	.LVL38:
+ 113:bsp/Src/bsp_iic.c ****     uint8_t i = 8;
+ 510              		.loc 1 113 5 view .LVU78
+ 114:bsp/Src/bsp_iic.c ****     L_SCL;
+ 511              		.loc 1 114 5 view .LVU79
+ 512 0008 0022     		movs	r2, #0
+ 513 000a 1B4B     		ldr	r3, .L37
+ 514 000c 1988     		ldrh	r1, [r3]
+ 515 000e 1B4B     		ldr	r3, .L37+4
+ 516 0010 1868     		ldr	r0, [r3]
+ 517 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 518              	.LVL39:
+ 115:bsp/Src/bsp_iic.c ****     //发最高位，每次左移一位替换最高位
+ 116:bsp/Src/bsp_iic.c ****     while(i-- > 0){
+ 519              		.loc 1 116 5 view .LVU80
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 12
+
+
+ 113:bsp/Src/bsp_iic.c ****     L_SCL;
+ 520              		.loc 1 113 13 is_stmt 0 view .LVU81
+ 521 0016 0823     		movs	r3, #8
+ 522              		.loc 1 116 10 view .LVU82
+ 523 0018 1BE0     		b	.L31
+ 524              	.LVL40:
+ 525              	.L32:
+ 117:bsp/Src/bsp_iic.c ****         delay_us(2);//t_HD-DAT
+ 118:bsp/Src/bsp_iic.c ****         if (Byte & 0x80) H_SDA;
+ 119:bsp/Src/bsp_iic.c ****         else L_SDA;
+ 526              		.loc 1 119 14 is_stmt 1 view .LVU83
+ 527 001a 0022     		movs	r2, #0
+ 528 001c 184B     		ldr	r3, .L37+8
+ 529 001e 1988     		ldrh	r1, [r3]
+ 530 0020 184B     		ldr	r3, .L37+12
+ 531 0022 1868     		ldr	r0, [r3]
+ 532 0024 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 533              	.LVL41:
+ 534              	.L33:
+ 120:bsp/Src/bsp_iic.c ****         Byte<<=1;
+ 535              		.loc 1 120 9 view .LVU84
+ 536              		.loc 1 120 13 is_stmt 0 view .LVU85
+ 537 0028 6400     		lsls	r4, r4, #1
+ 538              	.LVL42:
+ 539              		.loc 1 120 13 view .LVU86
+ 540 002a E4B2     		uxtb	r4, r4
+ 541              	.LVL43:
+ 121:bsp/Src/bsp_iic.c ****         delay_us(2);//t_SU-DAT
+ 542              		.loc 1 121 9 is_stmt 1 view .LVU87
+ 543 002c 0220     		movs	r0, #2
+ 544 002e FFF7FEFF 		bl	delay_us
+ 545              	.LVL44:
+ 122:bsp/Src/bsp_iic.c ****         H_SCL;
+ 546              		.loc 1 122 9 view .LVU88
+ 547 0032 114E     		ldr	r6, .L37
+ 548 0034 114D     		ldr	r5, .L37+4
+ 549 0036 0122     		movs	r2, #1
+ 550 0038 3188     		ldrh	r1, [r6]
+ 551 003a 2868     		ldr	r0, [r5]
+ 552 003c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 553              	.LVL45:
+ 123:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 554              		.loc 1 123 9 view .LVU89
+ 555 0040 0420     		movs	r0, #4
+ 556 0042 FFF7FEFF 		bl	delay_us
+ 557              	.LVL46:
+ 124:bsp/Src/bsp_iic.c ****         L_SCL;
+ 558              		.loc 1 124 9 view .LVU90
+ 559 0046 0022     		movs	r2, #0
+ 560 0048 3188     		ldrh	r1, [r6]
+ 561 004a 2868     		ldr	r0, [r5]
+ 562 004c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 563              	.LVL47:
+ 116:bsp/Src/bsp_iic.c ****         delay_us(2);//t_HD-DAT
+ 564              		.loc 1 116 12 is_stmt 0 view .LVU91
+ 565 0050 3B46     		mov	r3, r7
+ 566              	.LVL48:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 13
+
+
+ 567              	.L31:
+ 116:bsp/Src/bsp_iic.c ****         delay_us(2);//t_HD-DAT
+ 568              		.loc 1 116 10 is_stmt 1 view .LVU92
+ 116:bsp/Src/bsp_iic.c ****         delay_us(2);//t_HD-DAT
+ 569              		.loc 1 116 12 is_stmt 0 view .LVU93
+ 570 0052 5A1E     		subs	r2, r3, #1
+ 571 0054 D7B2     		uxtb	r7, r2
+ 572              	.LVL49:
+ 116:bsp/Src/bsp_iic.c ****         delay_us(2);//t_HD-DAT
+ 573              		.loc 1 116 10 view .LVU94
+ 574 0056 6BB1     		cbz	r3, .L36
+ 117:bsp/Src/bsp_iic.c ****         if (Byte & 0x80) H_SDA;
+ 575              		.loc 1 117 9 is_stmt 1 view .LVU95
+ 576 0058 0220     		movs	r0, #2
+ 577 005a FFF7FEFF 		bl	delay_us
+ 578              	.LVL50:
+ 118:bsp/Src/bsp_iic.c ****         else L_SDA;
+ 579              		.loc 1 118 9 view .LVU96
+ 118:bsp/Src/bsp_iic.c ****         else L_SDA;
+ 580              		.loc 1 118 12 is_stmt 0 view .LVU97
+ 581 005e 14F0800F 		tst	r4, #128
+ 582 0062 DAD0     		beq	.L32
+ 118:bsp/Src/bsp_iic.c ****         else L_SDA;
+ 583              		.loc 1 118 26 is_stmt 1 discriminator 1 view .LVU98
+ 584 0064 0122     		movs	r2, #1
+ 585 0066 064B     		ldr	r3, .L37+8
+ 586 0068 1988     		ldrh	r1, [r3]
+ 587 006a 064B     		ldr	r3, .L37+12
+ 588 006c 1868     		ldr	r0, [r3]
+ 589 006e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 590              	.LVL51:
+ 591 0072 D9E7     		b	.L33
+ 592              	.L36:
+ 125:bsp/Src/bsp_iic.c ****     }
+ 126:bsp/Src/bsp_iic.c **** }
+ 593              		.loc 1 126 1 is_stmt 0 view .LVU99
+ 594 0074 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 595              	.LVL52:
+ 596              	.L38:
+ 597              		.loc 1 126 1 view .LVU100
+ 598 0076 00BF     		.align	2
+ 599              	.L37:
+ 600 0078 00000000 		.word	.LANCHOR2
+ 601 007c 00000000 		.word	.LANCHOR3
+ 602 0080 00000000 		.word	.LANCHOR0
+ 603 0084 00000000 		.word	.LANCHOR1
+ 604              		.cfi_endproc
+ 605              	.LFE241:
+ 607              		.section	.text.Master_Receive_Byte,"ax",%progbits
+ 608              		.align	1
+ 609              		.global	Master_Receive_Byte
+ 610              		.syntax unified
+ 611              		.thumb
+ 612              		.thumb_func
+ 614              	Master_Receive_Byte:
+ 615              	.LFB242:
+ 127:bsp/Src/bsp_iic.c **** 
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 14
+
+
+ 128:bsp/Src/bsp_iic.c **** uint8_t Master_Receive_Byte()
+ 129:bsp/Src/bsp_iic.c **** {
+ 616              		.loc 1 129 1 is_stmt 1 view -0
+ 617              		.cfi_startproc
+ 618              		@ args = 0, pretend = 0, frame = 0
+ 619              		@ frame_needed = 0, uses_anonymous_args = 0
+ 620 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 621              	.LCFI11:
+ 622              		.cfi_def_cfa_offset 24
+ 623              		.cfi_offset 3, -24
+ 624              		.cfi_offset 4, -20
+ 625              		.cfi_offset 5, -16
+ 626              		.cfi_offset 6, -12
+ 627              		.cfi_offset 7, -8
+ 628              		.cfi_offset 14, -4
+ 130:bsp/Src/bsp_iic.c ****     SDA_Set_Input();
+ 629              		.loc 1 130 5 view .LVU102
+ 630 0002 FFF7FEFF 		bl	SDA_Set_Input
+ 631              	.LVL53:
+ 131:bsp/Src/bsp_iic.c ****     uint8_t i = 0;
+ 632              		.loc 1 131 5 view .LVU103
+ 132:bsp/Src/bsp_iic.c ****     uint8_t Byte = 0;
+ 633              		.loc 1 132 5 view .LVU104
+ 133:bsp/Src/bsp_iic.c ****     while(i++ < 8){
+ 634              		.loc 1 133 5 view .LVU105
+ 132:bsp/Src/bsp_iic.c ****     uint8_t Byte = 0;
+ 635              		.loc 1 132 13 is_stmt 0 view .LVU106
+ 636 0006 0024     		movs	r4, #0
+ 131:bsp/Src/bsp_iic.c ****     uint8_t i = 0;
+ 637              		.loc 1 131 13 view .LVU107
+ 638 0008 2346     		mov	r3, r4
+ 639              		.loc 1 133 10 view .LVU108
+ 640 000a 03E0     		b	.L40
+ 641              	.LVL54:
+ 642              	.L41:
+ 134:bsp/Src/bsp_iic.c ****         Byte<<=1;    
+ 135:bsp/Src/bsp_iic.c ****         L_SCL;
+ 136:bsp/Src/bsp_iic.c ****         delay_us(4);//t_LOW
+ 137:bsp/Src/bsp_iic.c ****         H_SCL;
+ 138:bsp/Src/bsp_iic.c ****         if (READ_DA) Byte++;  
+ 139:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 643              		.loc 1 139 9 is_stmt 1 view .LVU109
+ 644 000c 0420     		movs	r0, #4
+ 645 000e FFF7FEFF 		bl	delay_us
+ 646              	.LVL55:
+ 133:bsp/Src/bsp_iic.c ****     while(i++ < 8){
+ 647              		.loc 1 133 12 is_stmt 0 view .LVU110
+ 648 0012 3B46     		mov	r3, r7
+ 649              	.LVL56:
+ 650              	.L40:
+ 133:bsp/Src/bsp_iic.c ****     while(i++ < 8){
+ 651              		.loc 1 133 10 is_stmt 1 view .LVU111
+ 133:bsp/Src/bsp_iic.c ****     while(i++ < 8){
+ 652              		.loc 1 133 12 is_stmt 0 view .LVU112
+ 653 0014 5A1C     		adds	r2, r3, #1
+ 654 0016 D7B2     		uxtb	r7, r2
+ 655              	.LVL57:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 15
+
+
+ 133:bsp/Src/bsp_iic.c ****     while(i++ < 8){
+ 656              		.loc 1 133 10 view .LVU113
+ 657 0018 072B     		cmp	r3, #7
+ 658 001a 1BD8     		bhi	.L44
+ 134:bsp/Src/bsp_iic.c ****         Byte<<=1;    
+ 659              		.loc 1 134 9 is_stmt 1 view .LVU114
+ 134:bsp/Src/bsp_iic.c ****         Byte<<=1;    
+ 660              		.loc 1 134 13 is_stmt 0 view .LVU115
+ 661 001c 6400     		lsls	r4, r4, #1
+ 662              	.LVL58:
+ 134:bsp/Src/bsp_iic.c ****         Byte<<=1;    
+ 663              		.loc 1 134 13 view .LVU116
+ 664 001e E4B2     		uxtb	r4, r4
+ 665              	.LVL59:
+ 135:bsp/Src/bsp_iic.c ****         delay_us(4);//t_LOW
+ 666              		.loc 1 135 9 is_stmt 1 view .LVU117
+ 667 0020 114E     		ldr	r6, .L45
+ 668 0022 124D     		ldr	r5, .L45+4
+ 669 0024 0022     		movs	r2, #0
+ 670 0026 3188     		ldrh	r1, [r6]
+ 671 0028 2868     		ldr	r0, [r5]
+ 672 002a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 673              	.LVL60:
+ 136:bsp/Src/bsp_iic.c ****         H_SCL;
+ 674              		.loc 1 136 9 view .LVU118
+ 675 002e 0420     		movs	r0, #4
+ 676 0030 FFF7FEFF 		bl	delay_us
+ 677              	.LVL61:
+ 137:bsp/Src/bsp_iic.c ****         if (READ_DA) Byte++;  
+ 678              		.loc 1 137 9 view .LVU119
+ 679 0034 0122     		movs	r2, #1
+ 680 0036 3188     		ldrh	r1, [r6]
+ 681 0038 2868     		ldr	r0, [r5]
+ 682 003a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 683              	.LVL62:
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 684              		.loc 1 138 9 view .LVU120
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 685              		.loc 1 138 13 is_stmt 0 view .LVU121
+ 686 003e 0C4B     		ldr	r3, .L45+8
+ 687 0040 1988     		ldrh	r1, [r3]
+ 688 0042 0C4B     		ldr	r3, .L45+12
+ 689 0044 1868     		ldr	r0, [r3]
+ 690 0046 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 691              	.LVL63:
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 692              		.loc 1 138 12 view .LVU122
+ 693 004a 0028     		cmp	r0, #0
+ 694 004c DED0     		beq	.L41
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 695              		.loc 1 138 22 is_stmt 1 discriminator 1 view .LVU123
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 696              		.loc 1 138 26 is_stmt 0 discriminator 1 view .LVU124
+ 697 004e 0134     		adds	r4, r4, #1
+ 698              	.LVL64:
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 699              		.loc 1 138 26 discriminator 1 view .LVU125
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 16
+
+
+ 700 0050 E4B2     		uxtb	r4, r4
+ 701              	.LVL65:
+ 138:bsp/Src/bsp_iic.c ****         delay_us(4);//t_HIGH
+ 702              		.loc 1 138 26 discriminator 1 view .LVU126
+ 703 0052 DBE7     		b	.L41
+ 704              	.L44:
+ 140:bsp/Src/bsp_iic.c ****     }
+ 141:bsp/Src/bsp_iic.c ****     L_SCL;
+ 705              		.loc 1 141 5 is_stmt 1 view .LVU127
+ 706 0054 0022     		movs	r2, #0
+ 707 0056 044B     		ldr	r3, .L45
+ 708 0058 1988     		ldrh	r1, [r3]
+ 709 005a 044B     		ldr	r3, .L45+4
+ 710 005c 1868     		ldr	r0, [r3]
+ 711 005e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 712              	.LVL66:
+ 142:bsp/Src/bsp_iic.c ****     return Byte;
+ 713              		.loc 1 142 5 view .LVU128
+ 143:bsp/Src/bsp_iic.c **** }
+ 714              		.loc 1 143 1 is_stmt 0 view .LVU129
+ 715 0062 2046     		mov	r0, r4
+ 716 0064 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 717              	.LVL67:
+ 718              	.L46:
+ 719              		.loc 1 143 1 view .LVU130
+ 720 0066 00BF     		.align	2
+ 721              	.L45:
+ 722 0068 00000000 		.word	.LANCHOR2
+ 723 006c 00000000 		.word	.LANCHOR3
+ 724 0070 00000000 		.word	.LANCHOR0
+ 725 0074 00000000 		.word	.LANCHOR1
+ 726              		.cfi_endproc
+ 727              	.LFE242:
+ 729              		.section	.text.Master_Transmit,"ax",%progbits
+ 730              		.align	1
+ 731              		.global	Master_Transmit
+ 732              		.syntax unified
+ 733              		.thumb
+ 734              		.thumb_func
+ 736              	Master_Transmit:
+ 737              	.LVL68:
+ 738              	.LFB243:
+ 144:bsp/Src/bsp_iic.c **** 
+ 145:bsp/Src/bsp_iic.c **** /***-------------------------***/
+ 146:bsp/Src/bsp_iic.c **** 
+ 147:bsp/Src/bsp_iic.c **** 
+ 148:bsp/Src/bsp_iic.c **** 
+ 149:bsp/Src/bsp_iic.c **** /***发送和接收多字节数据***/
+ 150:bsp/Src/bsp_iic.c **** 
+ 151:bsp/Src/bsp_iic.c **** void Master_Transmit(uint8_t port_index, uint8_t* pdata, uint16_t len)
+ 152:bsp/Src/bsp_iic.c **** {
+ 739              		.loc 1 152 1 is_stmt 1 view -0
+ 740              		.cfi_startproc
+ 741              		@ args = 0, pretend = 0, frame = 0
+ 742              		@ frame_needed = 0, uses_anonymous_args = 0
+ 743              		.loc 1 152 1 is_stmt 0 view .LVU132
+ 744 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 17
+
+
+ 745              	.LCFI12:
+ 746              		.cfi_def_cfa_offset 24
+ 747              		.cfi_offset 3, -24
+ 748              		.cfi_offset 4, -20
+ 749              		.cfi_offset 5, -16
+ 750              		.cfi_offset 6, -12
+ 751              		.cfi_offset 7, -8
+ 752              		.cfi_offset 14, -4
+ 753 0002 0E46     		mov	r6, r1
+ 754 0004 1546     		mov	r5, r2
+ 153:bsp/Src/bsp_iic.c ****     software_IIC_Port* port = IIC_port + port_index;
+ 755              		.loc 1 153 5 is_stmt 1 view .LVU133
+ 756              		.loc 1 153 40 is_stmt 0 view .LVU134
+ 757 0006 0201     		lsls	r2, r0, #4
+ 758              	.LVL69:
+ 759              		.loc 1 153 24 view .LVU135
+ 760 0008 1C4B     		ldr	r3, .L57
+ 761 000a 03EB0017 		add	r7, r3, r0, lsl #4
+ 762              	.LVL70:
+ 154:bsp/Src/bsp_iic.c ****     
+ 155:bsp/Src/bsp_iic.c ****     GPIOx_CL = port->IOx_CL;
+ 763              		.loc 1 155 5 is_stmt 1 view .LVU136
+ 764              		.loc 1 155 20 is_stmt 0 view .LVU137
+ 765 000e 7868     		ldr	r0, [r7, #4]
+ 766              	.LVL71:
+ 767              		.loc 1 155 14 view .LVU138
+ 768 0010 1B49     		ldr	r1, .L57+4
+ 769              	.LVL72:
+ 770              		.loc 1 155 14 view .LVU139
+ 771 0012 0860     		str	r0, [r1]
+ 156:bsp/Src/bsp_iic.c ****     GPIO_Pin_CL = port->Pin_CL;
+ 772              		.loc 1 156 5 is_stmt 1 view .LVU140
+ 773              		.loc 1 156 23 is_stmt 0 view .LVU141
+ 774 0014 B889     		ldrh	r0, [r7, #12]
+ 775              		.loc 1 156 17 view .LVU142
+ 776 0016 1B49     		ldr	r1, .L57+8
+ 777 0018 0880     		strh	r0, [r1]	@ movhi
+ 157:bsp/Src/bsp_iic.c ****     GPIOx_DA = port->IOx_DA;
+ 778              		.loc 1 157 5 is_stmt 1 view .LVU143
+ 779              		.loc 1 157 20 is_stmt 0 view .LVU144
+ 780 001a B868     		ldr	r0, [r7, #8]
+ 781              		.loc 1 157 14 view .LVU145
+ 782 001c 1A49     		ldr	r1, .L57+12
+ 783 001e 0860     		str	r0, [r1]
+ 158:bsp/Src/bsp_iic.c ****     GPIO_Pin_DA = port->Pin_DA;
+ 784              		.loc 1 158 5 is_stmt 1 view .LVU146
+ 785              		.loc 1 158 23 is_stmt 0 view .LVU147
+ 786 0020 F889     		ldrh	r0, [r7, #14]
+ 787              		.loc 1 158 17 view .LVU148
+ 788 0022 1A49     		ldr	r1, .L57+16
+ 789 0024 0880     		strh	r0, [r1]	@ movhi
+ 159:bsp/Src/bsp_iic.c ****     uint8_t ADDR = port->slave_ADDR;
+ 790              		.loc 1 159 5 is_stmt 1 view .LVU149
+ 791              		.loc 1 159 13 is_stmt 0 view .LVU150
+ 792 0026 9C5C     		ldrb	r4, [r3, r2]	@ zero_extendqisi2
+ 793              	.LVL73:
+ 160:bsp/Src/bsp_iic.c **** 
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 18
+
+
+ 161:bsp/Src/bsp_iic.c ****     uint8_t i = 0;
+ 794              		.loc 1 161 5 is_stmt 1 view .LVU151
+ 162:bsp/Src/bsp_iic.c **** 
+ 163:bsp/Src/bsp_iic.c ****     Master_Start(port);
+ 795              		.loc 1 163 5 view .LVU152
+ 796 0028 3846     		mov	r0, r7
+ 797 002a FFF7FEFF 		bl	Master_Start
+ 798              	.LVL74:
+ 164:bsp/Src/bsp_iic.c ****     Master_Transmit_Byte(ADDR << 1);//从机地址 + W
+ 799              		.loc 1 164 5 view .LVU153
+ 800 002e 6000     		lsls	r0, r4, #1
+ 801 0030 00F0FE00 		and	r0, r0, #254
+ 802 0034 FFF7FEFF 		bl	Master_Transmit_Byte
+ 803              	.LVL75:
+ 165:bsp/Src/bsp_iic.c ****     if(Master_wait_ACK() == 0xff){
+ 804              		.loc 1 165 5 view .LVU154
+ 805              		.loc 1 165 8 is_stmt 0 view .LVU155
+ 806 0038 FFF7FEFF 		bl	Master_wait_ACK
+ 807              	.LVL76:
+ 808              		.loc 1 165 7 view .LVU156
+ 809 003c FF28     		cmp	r0, #255
+ 810 003e 0DD0     		beq	.L54
+ 166:bsp/Src/bsp_iic.c ****         //收到NACK
+ 167:bsp/Src/bsp_iic.c ****         Master_Stop();
+ 168:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 169:bsp/Src/bsp_iic.c ****         return;
+ 170:bsp/Src/bsp_iic.c ****     }
+ 171:bsp/Src/bsp_iic.c **** 
+ 172:bsp/Src/bsp_iic.c ****     for(i = 0; i < len; i++){
+ 811              		.loc 1 172 11 view .LVU157
+ 812 0040 0024     		movs	r4, #0
+ 813              	.LVL77:
+ 814              	.L48:
+ 815              		.loc 1 172 16 is_stmt 1 discriminator 1 view .LVU158
+ 816              		.loc 1 172 18 is_stmt 0 discriminator 1 view .LVU159
+ 817 0042 A3B2     		uxth	r3, r4
+ 818              		.loc 1 172 5 discriminator 1 view .LVU160
+ 819 0044 AB42     		cmp	r3, r5
+ 820 0046 13D2     		bcs	.L55
+ 173:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 821              		.loc 1 173 9 is_stmt 1 view .LVU161
+ 822 0048 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 823 004a FFF7FEFF 		bl	Master_Transmit_Byte
+ 824              	.LVL78:
+ 174:bsp/Src/bsp_iic.c ****         if(Master_wait_ACK() == 0xff){
+ 825              		.loc 1 174 9 view .LVU162
+ 826              		.loc 1 174 12 is_stmt 0 view .LVU163
+ 827 004e FFF7FEFF 		bl	Master_wait_ACK
+ 828              	.LVL79:
+ 829              		.loc 1 174 11 view .LVU164
+ 830 0052 FF28     		cmp	r0, #255
+ 831 0054 07D0     		beq	.L56
+ 172:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 832              		.loc 1 172 25 is_stmt 1 discriminator 2 view .LVU165
+ 172:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 833              		.loc 1 172 26 is_stmt 0 discriminator 2 view .LVU166
+ 834 0056 0134     		adds	r4, r4, #1
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 19
+
+
+ 835              	.LVL80:
+ 172:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 836              		.loc 1 172 26 discriminator 2 view .LVU167
+ 837 0058 E4B2     		uxtb	r4, r4
+ 838              	.LVL81:
+ 172:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 839              		.loc 1 172 26 discriminator 2 view .LVU168
+ 840 005a F2E7     		b	.L48
+ 841              	.LVL82:
+ 842              	.L54:
+ 167:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 843              		.loc 1 167 9 is_stmt 1 view .LVU169
+ 844 005c FFF7FEFF 		bl	Master_Stop
+ 845              	.LVL83:
+ 168:bsp/Src/bsp_iic.c ****         return;
+ 846              		.loc 1 168 9 view .LVU170
+ 168:bsp/Src/bsp_iic.c ****         return;
+ 847              		.loc 1 168 22 is_stmt 0 view .LVU171
+ 848 0060 0023     		movs	r3, #0
+ 849 0062 7B70     		strb	r3, [r7, #1]
+ 169:bsp/Src/bsp_iic.c ****     }
+ 850              		.loc 1 169 9 is_stmt 1 view .LVU172
+ 851 0064 08E0     		b	.L47
+ 852              	.LVL84:
+ 853              	.L56:
+ 175:bsp/Src/bsp_iic.c ****             //收到NACK
+ 176:bsp/Src/bsp_iic.c ****             Master_Stop();
+ 854              		.loc 1 176 13 view .LVU173
+ 855 0066 FFF7FEFF 		bl	Master_Stop
+ 856              	.LVL85:
+ 177:bsp/Src/bsp_iic.c ****             port->status = IIC_ERR;
+ 857              		.loc 1 177 13 view .LVU174
+ 858              		.loc 1 177 26 is_stmt 0 view .LVU175
+ 859 006a 0023     		movs	r3, #0
+ 860 006c 7B70     		strb	r3, [r7, #1]
+ 178:bsp/Src/bsp_iic.c ****             return;
+ 861              		.loc 1 178 13 is_stmt 1 view .LVU176
+ 862 006e 03E0     		b	.L47
+ 863              	.L55:
+ 179:bsp/Src/bsp_iic.c ****         }
+ 180:bsp/Src/bsp_iic.c ****     }
+ 181:bsp/Src/bsp_iic.c **** 
+ 182:bsp/Src/bsp_iic.c ****     Master_Stop();
+ 864              		.loc 1 182 5 view .LVU177
+ 865 0070 FFF7FEFF 		bl	Master_Stop
+ 866              	.LVL86:
+ 183:bsp/Src/bsp_iic.c ****     port->status = IIC_OK;
+ 867              		.loc 1 183 5 view .LVU178
+ 868              		.loc 1 183 18 is_stmt 0 view .LVU179
+ 869 0074 0123     		movs	r3, #1
+ 870 0076 7B70     		strb	r3, [r7, #1]
+ 184:bsp/Src/bsp_iic.c ****     return;
+ 871              		.loc 1 184 5 is_stmt 1 view .LVU180
+ 872              	.LVL87:
+ 873              	.L47:
+ 185:bsp/Src/bsp_iic.c **** }
+ 874              		.loc 1 185 1 is_stmt 0 view .LVU181
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 20
+
+
+ 875 0078 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 876              	.LVL88:
+ 877              	.L58:
+ 878              		.loc 1 185 1 view .LVU182
+ 879 007a 00BF     		.align	2
+ 880              	.L57:
+ 881 007c 00000000 		.word	.LANCHOR4
+ 882 0080 00000000 		.word	.LANCHOR3
+ 883 0084 00000000 		.word	.LANCHOR2
+ 884 0088 00000000 		.word	.LANCHOR1
+ 885 008c 00000000 		.word	.LANCHOR0
+ 886              		.cfi_endproc
+ 887              	.LFE243:
+ 889              		.section	.text.Master_Receive,"ax",%progbits
+ 890              		.align	1
+ 891              		.global	Master_Receive
+ 892              		.syntax unified
+ 893              		.thumb
+ 894              		.thumb_func
+ 896              	Master_Receive:
+ 897              	.LVL89:
+ 898              	.LFB244:
+ 186:bsp/Src/bsp_iic.c **** 
+ 187:bsp/Src/bsp_iic.c **** void Master_Receive(uint8_t port_index, uint8_t* rxbuf, uint16_t len)
+ 188:bsp/Src/bsp_iic.c **** {
+ 899              		.loc 1 188 1 is_stmt 1 view -0
+ 900              		.cfi_startproc
+ 901              		@ args = 0, pretend = 0, frame = 0
+ 902              		@ frame_needed = 0, uses_anonymous_args = 0
+ 903              		.loc 1 188 1 is_stmt 0 view .LVU184
+ 904 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 905              	.LCFI13:
+ 906              		.cfi_def_cfa_offset 24
+ 907              		.cfi_offset 3, -24
+ 908              		.cfi_offset 4, -20
+ 909              		.cfi_offset 5, -16
+ 910              		.cfi_offset 6, -12
+ 911              		.cfi_offset 7, -8
+ 912              		.cfi_offset 14, -4
+ 913 0002 0E46     		mov	r6, r1
+ 914 0004 1546     		mov	r5, r2
+ 189:bsp/Src/bsp_iic.c ****     software_IIC_Port* port = IIC_port + port_index;
+ 915              		.loc 1 189 5 is_stmt 1 view .LVU185
+ 916              		.loc 1 189 40 is_stmt 0 view .LVU186
+ 917 0006 0201     		lsls	r2, r0, #4
+ 918              	.LVL90:
+ 919              		.loc 1 189 24 view .LVU187
+ 920 0008 1B4B     		ldr	r3, .L66
+ 921 000a 03EB0017 		add	r7, r3, r0, lsl #4
+ 922              	.LVL91:
+ 190:bsp/Src/bsp_iic.c **** 
+ 191:bsp/Src/bsp_iic.c ****     GPIOx_CL = port->IOx_CL;
+ 923              		.loc 1 191 5 is_stmt 1 view .LVU188
+ 924              		.loc 1 191 20 is_stmt 0 view .LVU189
+ 925 000e 7868     		ldr	r0, [r7, #4]
+ 926              	.LVL92:
+ 927              		.loc 1 191 14 view .LVU190
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 21
+
+
+ 928 0010 1A49     		ldr	r1, .L66+4
+ 929              	.LVL93:
+ 930              		.loc 1 191 14 view .LVU191
+ 931 0012 0860     		str	r0, [r1]
+ 192:bsp/Src/bsp_iic.c ****     GPIO_Pin_CL = port->Pin_CL;
+ 932              		.loc 1 192 5 is_stmt 1 view .LVU192
+ 933              		.loc 1 192 23 is_stmt 0 view .LVU193
+ 934 0014 B889     		ldrh	r0, [r7, #12]
+ 935              		.loc 1 192 17 view .LVU194
+ 936 0016 1A49     		ldr	r1, .L66+8
+ 937 0018 0880     		strh	r0, [r1]	@ movhi
+ 193:bsp/Src/bsp_iic.c ****     GPIOx_DA = port->IOx_DA;
+ 938              		.loc 1 193 5 is_stmt 1 view .LVU195
+ 939              		.loc 1 193 20 is_stmt 0 view .LVU196
+ 940 001a B868     		ldr	r0, [r7, #8]
+ 941              		.loc 1 193 14 view .LVU197
+ 942 001c 1949     		ldr	r1, .L66+12
+ 943 001e 0860     		str	r0, [r1]
+ 194:bsp/Src/bsp_iic.c ****     GPIO_Pin_DA = port->Pin_DA;
+ 944              		.loc 1 194 5 is_stmt 1 view .LVU198
+ 945              		.loc 1 194 23 is_stmt 0 view .LVU199
+ 946 0020 F889     		ldrh	r0, [r7, #14]
+ 947              		.loc 1 194 17 view .LVU200
+ 948 0022 1949     		ldr	r1, .L66+16
+ 949 0024 0880     		strh	r0, [r1]	@ movhi
+ 195:bsp/Src/bsp_iic.c ****     uint8_t ADDR = port->slave_ADDR;
+ 950              		.loc 1 195 5 is_stmt 1 view .LVU201
+ 951              		.loc 1 195 13 is_stmt 0 view .LVU202
+ 952 0026 9C5C     		ldrb	r4, [r3, r2]	@ zero_extendqisi2
+ 953              	.LVL94:
+ 196:bsp/Src/bsp_iic.c **** 
+ 197:bsp/Src/bsp_iic.c ****     uint8_t i = 0;
+ 954              		.loc 1 197 5 is_stmt 1 view .LVU203
+ 198:bsp/Src/bsp_iic.c **** 
+ 199:bsp/Src/bsp_iic.c ****     Master_Start();
+ 955              		.loc 1 199 5 view .LVU204
+ 956 0028 FFF7FEFF 		bl	Master_Start
+ 957              	.LVL95:
+ 200:bsp/Src/bsp_iic.c ****     Master_Transmit_Byte((ADDR << 1 )| 1);//从机地址 + R
+ 958              		.loc 1 200 5 view .LVU205
+ 959              		.loc 1 200 32 is_stmt 0 view .LVU206
+ 960 002c 6000     		lsls	r0, r4, #1
+ 961              		.loc 1 200 38 view .LVU207
+ 962 002e 40F00100 		orr	r0, r0, #1
+ 963              		.loc 1 200 5 view .LVU208
+ 964 0032 C0B2     		uxtb	r0, r0
+ 965 0034 FFF7FEFF 		bl	Master_Transmit_Byte
+ 966              	.LVL96:
+ 201:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 967              		.loc 1 201 5 is_stmt 1 view .LVU209
+ 968              		.loc 1 201 9 is_stmt 0 view .LVU210
+ 969 0038 FFF7FEFF 		bl	Master_wait_ACK
+ 970              	.LVL97:
+ 971              		.loc 1 201 8 view .LVU211
+ 972 003c FF28     		cmp	r0, #255
+ 973 003e 01D0     		beq	.L65
+ 202:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止接收
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 22
+
+
+ 203:bsp/Src/bsp_iic.c ****         Master_Stop();
+ 204:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 205:bsp/Src/bsp_iic.c ****         return;
+ 206:bsp/Src/bsp_iic.c ****     } 
+ 207:bsp/Src/bsp_iic.c ****     for(i = 0; i < len; i++){
+ 974              		.loc 1 207 11 view .LVU212
+ 975 0040 0024     		movs	r4, #0
+ 976              	.LVL98:
+ 977              		.loc 1 207 11 view .LVU213
+ 978 0042 10E0     		b	.L60
+ 979              	.LVL99:
+ 980              	.L65:
+ 203:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 981              		.loc 1 203 9 is_stmt 1 view .LVU214
+ 982 0044 FFF7FEFF 		bl	Master_Stop
+ 983              	.LVL100:
+ 204:bsp/Src/bsp_iic.c ****         return;
+ 984              		.loc 1 204 9 view .LVU215
+ 204:bsp/Src/bsp_iic.c ****         return;
+ 985              		.loc 1 204 22 is_stmt 0 view .LVU216
+ 986 0048 0023     		movs	r3, #0
+ 987 004a 7B70     		strb	r3, [r7, #1]
+ 205:bsp/Src/bsp_iic.c ****     } 
+ 988              		.loc 1 205 9 is_stmt 1 view .LVU217
+ 989 004c 13E0     		b	.L59
+ 990              	.LVL101:
+ 991              	.L62:
+ 208:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 992              		.loc 1 208 9 discriminator 3 view .LVU218
+ 993              		.loc 1 208 20 is_stmt 0 discriminator 3 view .LVU219
+ 994 004e FFF7FEFF 		bl	Master_Receive_Byte
+ 995              	.LVL102:
+ 996              		.loc 1 208 18 discriminator 3 view .LVU220
+ 997 0052 3055     		strb	r0, [r6, r4]
+ 209:bsp/Src/bsp_iic.c ****         Master_N_ACK(!(len - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
+ 998              		.loc 1 209 9 is_stmt 1 discriminator 3 view .LVU221
+ 999              		.loc 1 209 28 is_stmt 0 discriminator 3 view .LVU222
+ 1000 0054 281B     		subs	r0, r5, r4
+ 1001              		.loc 1 209 9 discriminator 3 view .LVU223
+ 1002 0056 0128     		cmp	r0, #1
+ 1003 0058 14BF     		ite	ne
+ 1004 005a 0020     		movne	r0, #0
+ 1005 005c 0120     		moveq	r0, #1
+ 1006 005e FFF7FEFF 		bl	Master_N_ACK
+ 1007              	.LVL103:
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1008              		.loc 1 207 25 is_stmt 1 discriminator 3 view .LVU224
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1009              		.loc 1 207 26 is_stmt 0 discriminator 3 view .LVU225
+ 1010 0062 0134     		adds	r4, r4, #1
+ 1011              	.LVL104:
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1012              		.loc 1 207 26 discriminator 3 view .LVU226
+ 1013 0064 E4B2     		uxtb	r4, r4
+ 1014              	.LVL105:
+ 1015              	.L60:
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 23
+
+
+ 1016              		.loc 1 207 16 is_stmt 1 discriminator 1 view .LVU227
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1017              		.loc 1 207 18 is_stmt 0 discriminator 1 view .LVU228
+ 1018 0066 A3B2     		uxth	r3, r4
+ 207:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1019              		.loc 1 207 5 discriminator 1 view .LVU229
+ 1020 0068 AB42     		cmp	r3, r5
+ 1021 006a F0D3     		bcc	.L62
+ 210:bsp/Src/bsp_iic.c ****     }
+ 211:bsp/Src/bsp_iic.c **** 
+ 212:bsp/Src/bsp_iic.c ****     Master_Stop(port);
+ 1022              		.loc 1 212 5 is_stmt 1 view .LVU230
+ 1023 006c 3846     		mov	r0, r7
+ 1024 006e FFF7FEFF 		bl	Master_Stop
+ 1025              	.LVL106:
+ 213:bsp/Src/bsp_iic.c ****     port->status = IIC_OK;
+ 1026              		.loc 1 213 5 view .LVU231
+ 1027              		.loc 1 213 18 is_stmt 0 view .LVU232
+ 1028 0072 0123     		movs	r3, #1
+ 1029 0074 7B70     		strb	r3, [r7, #1]
+ 214:bsp/Src/bsp_iic.c ****     return;
+ 1030              		.loc 1 214 5 is_stmt 1 view .LVU233
+ 1031              	.LVL107:
+ 1032              	.L59:
+ 215:bsp/Src/bsp_iic.c **** }
+ 1033              		.loc 1 215 1 is_stmt 0 view .LVU234
+ 1034 0076 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1035              	.LVL108:
+ 1036              	.L67:
+ 1037              		.loc 1 215 1 view .LVU235
+ 1038              		.align	2
+ 1039              	.L66:
+ 1040 0078 00000000 		.word	.LANCHOR4
+ 1041 007c 00000000 		.word	.LANCHOR3
+ 1042 0080 00000000 		.word	.LANCHOR2
+ 1043 0084 00000000 		.word	.LANCHOR1
+ 1044 0088 00000000 		.word	.LANCHOR0
+ 1045              		.cfi_endproc
+ 1046              	.LFE244:
+ 1048              		.section	.text.Master_Complex,"ax",%progbits
+ 1049              		.align	1
+ 1050              		.global	Master_Complex
+ 1051              		.syntax unified
+ 1052              		.thumb
+ 1053              		.thumb_func
+ 1055              	Master_Complex:
+ 1056              	.LVL109:
+ 1057              	.LFB245:
+ 216:bsp/Src/bsp_iic.c **** 
+ 217:bsp/Src/bsp_iic.c **** void Master_Complex(uint8_t port_index, uint8_t* pdata, uint16_t len_t, uint8_t* rxbuf, uint16_t le
+ 218:bsp/Src/bsp_iic.c **** {
+ 1058              		.loc 1 218 1 is_stmt 1 view -0
+ 1059              		.cfi_startproc
+ 1060              		@ args = 4, pretend = 0, frame = 0
+ 1061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1062              		.loc 1 218 1 is_stmt 0 view .LVU237
+ 1063 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 24
+
+
+ 1064              	.LCFI14:
+ 1065              		.cfi_def_cfa_offset 32
+ 1066              		.cfi_offset 4, -32
+ 1067              		.cfi_offset 5, -28
+ 1068              		.cfi_offset 6, -24
+ 1069              		.cfi_offset 7, -20
+ 1070              		.cfi_offset 8, -16
+ 1071              		.cfi_offset 9, -12
+ 1072              		.cfi_offset 10, -8
+ 1073              		.cfi_offset 14, -4
+ 1074 0004 8946     		mov	r9, r1
+ 1075 0006 1546     		mov	r5, r2
+ 1076 0008 9846     		mov	r8, r3
+ 1077 000a BDF82070 		ldrh	r7, [sp, #32]
+ 219:bsp/Src/bsp_iic.c ****     software_IIC_Port* port = IIC_port + port_index;
+ 1078              		.loc 1 219 5 is_stmt 1 view .LVU238
+ 1079              		.loc 1 219 40 is_stmt 0 view .LVU239
+ 1080 000e 0201     		lsls	r2, r0, #4
+ 1081              	.LVL110:
+ 1082              		.loc 1 219 24 view .LVU240
+ 1083 0010 314B     		ldr	r3, .L82
+ 1084              	.LVL111:
+ 1085              		.loc 1 219 24 view .LVU241
+ 1086 0012 03EB0016 		add	r6, r3, r0, lsl #4
+ 1087              	.LVL112:
+ 220:bsp/Src/bsp_iic.c **** 
+ 221:bsp/Src/bsp_iic.c ****     GPIOx_CL = port->IOx_CL;
+ 1088              		.loc 1 221 5 is_stmt 1 view .LVU242
+ 1089              		.loc 1 221 20 is_stmt 0 view .LVU243
+ 1090 0016 7068     		ldr	r0, [r6, #4]
+ 1091              	.LVL113:
+ 1092              		.loc 1 221 14 view .LVU244
+ 1093 0018 3049     		ldr	r1, .L82+4
+ 1094              	.LVL114:
+ 1095              		.loc 1 221 14 view .LVU245
+ 1096 001a 0860     		str	r0, [r1]
+ 222:bsp/Src/bsp_iic.c ****     GPIO_Pin_CL = port->Pin_CL;
+ 1097              		.loc 1 222 5 is_stmt 1 view .LVU246
+ 1098              		.loc 1 222 23 is_stmt 0 view .LVU247
+ 1099 001c B089     		ldrh	r0, [r6, #12]
+ 1100              		.loc 1 222 17 view .LVU248
+ 1101 001e 3049     		ldr	r1, .L82+8
+ 1102 0020 0880     		strh	r0, [r1]	@ movhi
+ 223:bsp/Src/bsp_iic.c ****     GPIOx_DA = port->IOx_DA;
+ 1103              		.loc 1 223 5 is_stmt 1 view .LVU249
+ 1104              		.loc 1 223 20 is_stmt 0 view .LVU250
+ 1105 0022 B068     		ldr	r0, [r6, #8]
+ 1106              		.loc 1 223 14 view .LVU251
+ 1107 0024 2F49     		ldr	r1, .L82+12
+ 1108 0026 0860     		str	r0, [r1]
+ 224:bsp/Src/bsp_iic.c ****     GPIO_Pin_DA = port->Pin_DA;
+ 1109              		.loc 1 224 5 is_stmt 1 view .LVU252
+ 1110              		.loc 1 224 23 is_stmt 0 view .LVU253
+ 1111 0028 F089     		ldrh	r0, [r6, #14]
+ 1112              		.loc 1 224 17 view .LVU254
+ 1113 002a 2F49     		ldr	r1, .L82+16
+ 1114 002c 0880     		strh	r0, [r1]	@ movhi
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 25
+
+
+ 225:bsp/Src/bsp_iic.c ****     uint8_t ADDR = port->slave_ADDR;
+ 1115              		.loc 1 225 5 is_stmt 1 view .LVU255
+ 1116              		.loc 1 225 13 is_stmt 0 view .LVU256
+ 1117 002e 13F802A0 		ldrb	r10, [r3, r2]	@ zero_extendqisi2
+ 1118              	.LVL115:
+ 226:bsp/Src/bsp_iic.c **** 
+ 227:bsp/Src/bsp_iic.c ****     uint8_t i = 0;
+ 1119              		.loc 1 227 5 is_stmt 1 view .LVU257
+ 228:bsp/Src/bsp_iic.c **** 
+ 229:bsp/Src/bsp_iic.c ****     Master_Start();
+ 1120              		.loc 1 229 5 view .LVU258
+ 1121 0032 FFF7FEFF 		bl	Master_Start
+ 1122              	.LVL116:
+ 230:bsp/Src/bsp_iic.c ****     Master_Transmit_Byte(ADDR << 1);//从机地址 + W
+ 1123              		.loc 1 230 5 view .LVU259
+ 1124 0036 4FEA4A00 		lsl	r0, r10, #1
+ 1125 003a 00F0FE00 		and	r0, r0, #254
+ 1126 003e FFF7FEFF 		bl	Master_Transmit_Byte
+ 1127              	.LVL117:
+ 231:bsp/Src/bsp_iic.c ****     if(Master_wait_ACK() == 0xff){
+ 1128              		.loc 1 231 5 view .LVU260
+ 1129              		.loc 1 231 8 is_stmt 0 view .LVU261
+ 1130 0042 FFF7FEFF 		bl	Master_wait_ACK
+ 1131              	.LVL118:
+ 1132              		.loc 1 231 7 view .LVU262
+ 1133 0046 FF28     		cmp	r0, #255
+ 1134 0048 0FD0     		beq	.L78
+ 232:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止发送
+ 233:bsp/Src/bsp_iic.c ****         Master_Stop();
+ 234:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 235:bsp/Src/bsp_iic.c ****         return;
+ 236:bsp/Src/bsp_iic.c ****     }
+ 237:bsp/Src/bsp_iic.c ****    for(i = 0; i < len_t; i++){
+ 1135              		.loc 1 237 10 view .LVU263
+ 1136 004a 0024     		movs	r4, #0
+ 1137              	.LVL119:
+ 1138              	.L69:
+ 1139              		.loc 1 237 15 is_stmt 1 discriminator 1 view .LVU264
+ 1140              		.loc 1 237 17 is_stmt 0 discriminator 1 view .LVU265
+ 1141 004c 1FFA84FC 		uxth	ip, r4
+ 1142              		.loc 1 237 4 discriminator 1 view .LVU266
+ 1143 0050 AC45     		cmp	ip, r5
+ 1144 0052 15D2     		bcs	.L79
+ 238:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 1145              		.loc 1 238 9 is_stmt 1 view .LVU267
+ 1146 0054 19F80400 		ldrb	r0, [r9, r4]	@ zero_extendqisi2
+ 1147 0058 FFF7FEFF 		bl	Master_Transmit_Byte
+ 1148              	.LVL120:
+ 239:bsp/Src/bsp_iic.c ****         if(Master_wait_ACK() == 0xff){
+ 1149              		.loc 1 239 9 view .LVU268
+ 1150              		.loc 1 239 12 is_stmt 0 view .LVU269
+ 1151 005c FFF7FEFF 		bl	Master_wait_ACK
+ 1152              	.LVL121:
+ 1153              		.loc 1 239 11 view .LVU270
+ 1154 0060 FF28     		cmp	r0, #255
+ 1155 0062 07D0     		beq	.L80
+ 237:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 26
+
+
+ 1156              		.loc 1 237 26 is_stmt 1 discriminator 2 view .LVU271
+ 237:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 1157              		.loc 1 237 27 is_stmt 0 discriminator 2 view .LVU272
+ 1158 0064 0134     		adds	r4, r4, #1
+ 1159              	.LVL122:
+ 237:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 1160              		.loc 1 237 27 discriminator 2 view .LVU273
+ 1161 0066 E4B2     		uxtb	r4, r4
+ 1162              	.LVL123:
+ 237:bsp/Src/bsp_iic.c ****         Master_Transmit_Byte(pdata[i]);
+ 1163              		.loc 1 237 27 discriminator 2 view .LVU274
+ 1164 0068 F0E7     		b	.L69
+ 1165              	.LVL124:
+ 1166              	.L78:
+ 233:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 1167              		.loc 1 233 9 is_stmt 1 view .LVU275
+ 1168 006a FFF7FEFF 		bl	Master_Stop
+ 1169              	.LVL125:
+ 234:bsp/Src/bsp_iic.c ****         return;
+ 1170              		.loc 1 234 9 view .LVU276
+ 234:bsp/Src/bsp_iic.c ****         return;
+ 1171              		.loc 1 234 22 is_stmt 0 view .LVU277
+ 1172 006e 0023     		movs	r3, #0
+ 1173 0070 7370     		strb	r3, [r6, #1]
+ 235:bsp/Src/bsp_iic.c ****     }
+ 1174              		.loc 1 235 9 is_stmt 1 view .LVU278
+ 1175 0072 03E0     		b	.L68
+ 1176              	.LVL126:
+ 1177              	.L80:
+ 240:bsp/Src/bsp_iic.c ****             //收到从机的NACK，停止发送
+ 241:bsp/Src/bsp_iic.c ****             Master_Stop();
+ 1178              		.loc 1 241 13 view .LVU279
+ 1179 0074 FFF7FEFF 		bl	Master_Stop
+ 1180              	.LVL127:
+ 242:bsp/Src/bsp_iic.c ****             port->status = IIC_ERR;
+ 1181              		.loc 1 242 13 view .LVU280
+ 1182              		.loc 1 242 26 is_stmt 0 view .LVU281
+ 1183 0078 0023     		movs	r3, #0
+ 1184 007a 7370     		strb	r3, [r6, #1]
+ 243:bsp/Src/bsp_iic.c ****             return;
+ 1185              		.loc 1 243 13 is_stmt 1 view .LVU282
+ 1186              	.LVL128:
+ 1187              	.L68:
+ 244:bsp/Src/bsp_iic.c ****         }
+ 245:bsp/Src/bsp_iic.c ****     }
+ 246:bsp/Src/bsp_iic.c **** 
+ 247:bsp/Src/bsp_iic.c ****     Master_Start();//复合格式二次起始信号
+ 248:bsp/Src/bsp_iic.c ****     delay_ms(1);   //?????为什么要等一会?????
+ 249:bsp/Src/bsp_iic.c ****     Master_Transmit_Byte((ADDR << 1 )| 1);//从机地址 + R
+ 250:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 251:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止接收
+ 252:bsp/Src/bsp_iic.c ****         Master_Stop();
+ 253:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 254:bsp/Src/bsp_iic.c ****         return;
+ 255:bsp/Src/bsp_iic.c ****     } 
+ 256:bsp/Src/bsp_iic.c ****     for(i = 0; i < len_r; i++){
+ 257:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 27
+
+
+ 258:bsp/Src/bsp_iic.c ****         Master_N_ACK(!(len_r - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
+ 259:bsp/Src/bsp_iic.c ****     }
+ 260:bsp/Src/bsp_iic.c **** 
+ 261:bsp/Src/bsp_iic.c ****     Master_Stop();
+ 262:bsp/Src/bsp_iic.c ****     port->status = IIC_OK;
+ 263:bsp/Src/bsp_iic.c ****     return;
+ 264:bsp/Src/bsp_iic.c **** }
+ 1188              		.loc 1 264 1 is_stmt 0 view .LVU283
+ 1189 007c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1190              	.LVL129:
+ 1191              	.L79:
+ 247:bsp/Src/bsp_iic.c ****     delay_ms(1);   //?????为什么要等一会?????
+ 1192              		.loc 1 247 5 is_stmt 1 view .LVU284
+ 1193 0080 FFF7FEFF 		bl	Master_Start
+ 1194              	.LVL130:
+ 248:bsp/Src/bsp_iic.c ****     Master_Transmit_Byte((ADDR << 1 )| 1);//从机地址 + R
+ 1195              		.loc 1 248 5 view .LVU285
+ 1196 0084 0120     		movs	r0, #1
+ 1197 0086 FFF7FEFF 		bl	delay_ms
+ 1198              	.LVL131:
+ 249:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 1199              		.loc 1 249 5 view .LVU286
+ 249:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 1200              		.loc 1 249 32 is_stmt 0 view .LVU287
+ 1201 008a 4FEA4A00 		lsl	r0, r10, #1
+ 249:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 1202              		.loc 1 249 38 view .LVU288
+ 1203 008e 40F00100 		orr	r0, r0, #1
+ 249:bsp/Src/bsp_iic.c ****     if (Master_wait_ACK() == 0xff) {
+ 1204              		.loc 1 249 5 view .LVU289
+ 1205 0092 C0B2     		uxtb	r0, r0
+ 1206 0094 FFF7FEFF 		bl	Master_Transmit_Byte
+ 1207              	.LVL132:
+ 250:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止接收
+ 1208              		.loc 1 250 5 is_stmt 1 view .LVU290
+ 250:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止接收
+ 1209              		.loc 1 250 9 is_stmt 0 view .LVU291
+ 1210 0098 FFF7FEFF 		bl	Master_wait_ACK
+ 1211              	.LVL133:
+ 250:bsp/Src/bsp_iic.c ****         //收到从机的NACK，停止接收
+ 1212              		.loc 1 250 8 view .LVU292
+ 1213 009c FF28     		cmp	r0, #255
+ 1214 009e 01D0     		beq	.L81
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1215              		.loc 1 256 11 view .LVU293
+ 1216 00a0 0024     		movs	r4, #0
+ 1217              	.LVL134:
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1218              		.loc 1 256 11 view .LVU294
+ 1219 00a2 11E0     		b	.L73
+ 1220              	.LVL135:
+ 1221              	.L81:
+ 252:bsp/Src/bsp_iic.c ****         port->status = IIC_ERR;
+ 1222              		.loc 1 252 9 is_stmt 1 view .LVU295
+ 1223 00a4 FFF7FEFF 		bl	Master_Stop
+ 1224              	.LVL136:
+ 253:bsp/Src/bsp_iic.c ****         return;
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 28
+
+
+ 1225              		.loc 1 253 9 view .LVU296
+ 253:bsp/Src/bsp_iic.c ****         return;
+ 1226              		.loc 1 253 22 is_stmt 0 view .LVU297
+ 1227 00a8 0023     		movs	r3, #0
+ 1228 00aa 7370     		strb	r3, [r6, #1]
+ 254:bsp/Src/bsp_iic.c ****     } 
+ 1229              		.loc 1 254 9 is_stmt 1 view .LVU298
+ 1230 00ac E6E7     		b	.L68
+ 1231              	.L74:
+ 257:bsp/Src/bsp_iic.c ****         Master_N_ACK(!(len_r - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
+ 1232              		.loc 1 257 9 discriminator 3 view .LVU299
+ 257:bsp/Src/bsp_iic.c ****         Master_N_ACK(!(len_r - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
+ 1233              		.loc 1 257 20 is_stmt 0 discriminator 3 view .LVU300
+ 1234 00ae FFF7FEFF 		bl	Master_Receive_Byte
+ 1235              	.LVL137:
+ 257:bsp/Src/bsp_iic.c ****         Master_N_ACK(!(len_r - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
+ 1236              		.loc 1 257 18 discriminator 3 view .LVU301
+ 1237 00b2 08F80400 		strb	r0, [r8, r4]
+ 258:bsp/Src/bsp_iic.c ****     }
+ 1238              		.loc 1 258 9 is_stmt 1 discriminator 3 view .LVU302
+ 258:bsp/Src/bsp_iic.c ****     }
+ 1239              		.loc 1 258 30 is_stmt 0 discriminator 3 view .LVU303
+ 1240 00b6 381B     		subs	r0, r7, r4
+ 258:bsp/Src/bsp_iic.c ****     }
+ 1241              		.loc 1 258 9 discriminator 3 view .LVU304
+ 1242 00b8 0128     		cmp	r0, #1
+ 1243 00ba 14BF     		ite	ne
+ 1244 00bc 0020     		movne	r0, #0
+ 1245 00be 0120     		moveq	r0, #1
+ 1246 00c0 FFF7FEFF 		bl	Master_N_ACK
+ 1247              	.LVL138:
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1248              		.loc 1 256 27 is_stmt 1 discriminator 3 view .LVU305
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1249              		.loc 1 256 28 is_stmt 0 discriminator 3 view .LVU306
+ 1250 00c4 0134     		adds	r4, r4, #1
+ 1251              	.LVL139:
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1252              		.loc 1 256 28 discriminator 3 view .LVU307
+ 1253 00c6 E4B2     		uxtb	r4, r4
+ 1254              	.LVL140:
+ 1255              	.L73:
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1256              		.loc 1 256 16 is_stmt 1 discriminator 1 view .LVU308
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1257              		.loc 1 256 18 is_stmt 0 discriminator 1 view .LVU309
+ 1258 00c8 A3B2     		uxth	r3, r4
+ 256:bsp/Src/bsp_iic.c ****         rxbuf[i] = Master_Receive_Byte();
+ 1259              		.loc 1 256 5 discriminator 1 view .LVU310
+ 1260 00ca BB42     		cmp	r3, r7
+ 1261 00cc EFD3     		bcc	.L74
+ 261:bsp/Src/bsp_iic.c ****     port->status = IIC_OK;
+ 1262              		.loc 1 261 5 is_stmt 1 view .LVU311
+ 1263 00ce FFF7FEFF 		bl	Master_Stop
+ 1264              	.LVL141:
+ 262:bsp/Src/bsp_iic.c ****     return;
+ 1265              		.loc 1 262 5 view .LVU312
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 29
+
+
+ 262:bsp/Src/bsp_iic.c ****     return;
+ 1266              		.loc 1 262 18 is_stmt 0 view .LVU313
+ 1267 00d2 0123     		movs	r3, #1
+ 1268 00d4 7370     		strb	r3, [r6, #1]
+ 263:bsp/Src/bsp_iic.c **** }
+ 1269              		.loc 1 263 5 is_stmt 1 view .LVU314
+ 1270 00d6 D1E7     		b	.L68
+ 1271              	.L83:
+ 1272              		.align	2
+ 1273              	.L82:
+ 1274 00d8 00000000 		.word	.LANCHOR4
+ 1275 00dc 00000000 		.word	.LANCHOR3
+ 1276 00e0 00000000 		.word	.LANCHOR2
+ 1277 00e4 00000000 		.word	.LANCHOR1
+ 1278 00e8 00000000 		.word	.LANCHOR0
+ 1279              		.cfi_endproc
+ 1280              	.LFE245:
+ 1282              		.section	.text.BSP_IIC_Init,"ax",%progbits
+ 1283              		.align	1
+ 1284              		.global	BSP_IIC_Init
+ 1285              		.syntax unified
+ 1286              		.thumb
+ 1287              		.thumb_func
+ 1289              	BSP_IIC_Init:
+ 1290              	.LFB246:
+ 265:bsp/Src/bsp_iic.c **** 
+ 266:bsp/Src/bsp_iic.c **** /***-----------------------------------------------***/
+ 267:bsp/Src/bsp_iic.c **** 
+ 268:bsp/Src/bsp_iic.c **** void BSP_IIC_Init(void)
+ 269:bsp/Src/bsp_iic.c **** {
+ 1291              		.loc 1 269 1 view -0
+ 1292              		.cfi_startproc
+ 1293              		@ args = 0, pretend = 0, frame = 0
+ 1294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1295              		@ link register save eliminated.
+ 270:bsp/Src/bsp_iic.c **** 
+ 271:bsp/Src/bsp_iic.c **** }
+ 1296              		.loc 1 271 1 view .LVU316
+ 1297 0000 7047     		bx	lr
+ 1298              		.cfi_endproc
+ 1299              	.LFE246:
+ 1301              		.section	.text.BSP_IIC_setpara,"ax",%progbits
+ 1302              		.align	1
+ 1303              		.global	BSP_IIC_setpara
+ 1304              		.syntax unified
+ 1305              		.thumb
+ 1306              		.thumb_func
+ 1308              	BSP_IIC_setpara:
+ 1309              	.LVL142:
+ 1310              	.LFB247:
+ 272:bsp/Src/bsp_iic.c **** 
+ 273:bsp/Src/bsp_iic.c **** void BSP_IIC_setpara(uint8_t port_index, GPIO_TypeDef* IOx_CL, uint16_t Pin_CL, GPIO_TypeDef* IOx_D
+ 274:bsp/Src/bsp_iic.c **** {
+ 1311              		.loc 1 274 1 view -0
+ 1312              		.cfi_startproc
+ 1313              		@ args = 8, pretend = 0, frame = 0
+ 1314              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 30
+
+
+ 1315              		@ link register save eliminated.
+ 1316              		.loc 1 274 1 is_stmt 0 view .LVU318
+ 1317 0000 10B4     		push	{r4}
+ 1318              	.LCFI15:
+ 1319              		.cfi_def_cfa_offset 4
+ 1320              		.cfi_offset 4, -4
+ 275:bsp/Src/bsp_iic.c ****     IIC_port[port_index].IOx_CL = IOx_CL;
+ 1321              		.loc 1 275 5 is_stmt 1 view .LVU319
+ 1322              		.loc 1 275 33 is_stmt 0 view .LVU320
+ 1323 0002 094C     		ldr	r4, .L87
+ 1324 0004 4FEA001C 		lsl	ip, r0, #4
+ 1325 0008 04EB0010 		add	r0, r4, r0, lsl #4
+ 1326              	.LVL143:
+ 1327              		.loc 1 275 33 view .LVU321
+ 1328 000c 4160     		str	r1, [r0, #4]
+ 276:bsp/Src/bsp_iic.c ****     IIC_port[port_index].IOx_DA = IOx_DA;
+ 1329              		.loc 1 276 5 is_stmt 1 view .LVU322
+ 1330              		.loc 1 276 33 is_stmt 0 view .LVU323
+ 1331 000e 8360     		str	r3, [r0, #8]
+ 277:bsp/Src/bsp_iic.c ****     IIC_port[port_index].Pin_CL = Pin_CL;
+ 1332              		.loc 1 277 5 is_stmt 1 view .LVU324
+ 1333              		.loc 1 277 33 is_stmt 0 view .LVU325
+ 1334 0010 8281     		strh	r2, [r0, #12]	@ movhi
+ 278:bsp/Src/bsp_iic.c ****     IIC_port[port_index].Pin_DA = Pin_DA;
+ 1335              		.loc 1 278 5 is_stmt 1 view .LVU326
+ 1336              		.loc 1 278 33 is_stmt 0 view .LVU327
+ 1337 0012 BDF80430 		ldrh	r3, [sp, #4]
+ 1338              	.LVL144:
+ 1339              		.loc 1 278 33 view .LVU328
+ 1340 0016 C381     		strh	r3, [r0, #14]	@ movhi
+ 279:bsp/Src/bsp_iic.c ****     IIC_port[port_index].slave_ADDR = ADDR;
+ 1341              		.loc 1 279 5 is_stmt 1 view .LVU329
+ 1342              		.loc 1 279 37 is_stmt 0 view .LVU330
+ 1343 0018 9DF80830 		ldrb	r3, [sp, #8]	@ zero_extendqisi2
+ 1344 001c 04F80C30 		strb	r3, [r4, ip]
+ 280:bsp/Src/bsp_iic.c **** }
+ 1345              		.loc 1 280 1 view .LVU331
+ 1346 0020 5DF8044B 		ldr	r4, [sp], #4
+ 1347              	.LCFI16:
+ 1348              		.cfi_restore 4
+ 1349              		.cfi_def_cfa_offset 0
+ 1350              	.LVL145:
+ 1351              		.loc 1 280 1 view .LVU332
+ 1352 0024 7047     		bx	lr
+ 1353              	.L88:
+ 1354 0026 00BF     		.align	2
+ 1355              	.L87:
+ 1356 0028 00000000 		.word	.LANCHOR4
+ 1357              		.cfi_endproc
+ 1358              	.LFE247:
+ 1360              		.section	.text.BSP_IIC_sta,"ax",%progbits
+ 1361              		.align	1
+ 1362              		.global	BSP_IIC_sta
+ 1363              		.syntax unified
+ 1364              		.thumb
+ 1365              		.thumb_func
+ 1367              	BSP_IIC_sta:
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 31
+
+
+ 1368              	.LVL146:
+ 1369              	.LFB248:
+ 281:bsp/Src/bsp_iic.c **** 
+ 282:bsp/Src/bsp_iic.c **** IIC_comu_status BSP_IIC_sta(uint8_t port_index)
+ 283:bsp/Src/bsp_iic.c **** {
+ 1370              		.loc 1 283 1 is_stmt 1 view -0
+ 1371              		.cfi_startproc
+ 1372              		@ args = 0, pretend = 0, frame = 0
+ 1373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1374              		@ link register save eliminated.
+ 284:bsp/Src/bsp_iic.c ****     return IIC_port[port_index].status;
+ 1375              		.loc 1 284 5 view .LVU334
+ 1376              		.loc 1 284 32 is_stmt 0 view .LVU335
+ 1377 0000 024B     		ldr	r3, .L90
+ 1378 0002 03EB0013 		add	r3, r3, r0, lsl #4
+ 285:bsp/Src/bsp_iic.c **** }...
+ 1379              		.loc 1 285 1 view .LVU336
+ 1380 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 1381              	.LVL147:
+ 1382              		.loc 1 285 1 view .LVU337
+ 1383 0008 7047     		bx	lr
+ 1384              	.L91:
+ 1385 000a 00BF     		.align	2
+ 1386              	.L90:
+ 1387 000c 00000000 		.word	.LANCHOR4
+ 1388              		.cfi_endproc
+ 1389              	.LFE248:
+ 1391              		.global	GPIO_Pin_DA
+ 1392              		.global	GPIO_Pin_CL
+ 1393              		.global	GPIOx_DA
+ 1394              		.global	GPIOx_CL
+ 1395              		.global	IIC_port
+ 1396              		.section	.bss.GPIO_Pin_CL,"aw",%nobits
+ 1397              		.align	1
+ 1398              		.set	.LANCHOR2,. + 0
+ 1401              	GPIO_Pin_CL:
+ 1402 0000 0000     		.space	2
+ 1403              		.section	.bss.GPIO_Pin_DA,"aw",%nobits
+ 1404              		.align	1
+ 1405              		.set	.LANCHOR0,. + 0
+ 1408              	GPIO_Pin_DA:
+ 1409 0000 0000     		.space	2
+ 1410              		.section	.bss.GPIOx_CL,"aw",%nobits
+ 1411              		.align	2
+ 1412              		.set	.LANCHOR3,. + 0
+ 1415              	GPIOx_CL:
+ 1416 0000 00000000 		.space	4
+ 1417              		.section	.bss.GPIOx_DA,"aw",%nobits
+ 1418              		.align	2
+ 1419              		.set	.LANCHOR1,. + 0
+ 1422              	GPIOx_DA:
+ 1423 0000 00000000 		.space	4
+ 1424              		.section	.bss.IIC_port,"aw",%nobits
+ 1425              		.align	2
+ 1426              		.set	.LANCHOR4,. + 0
+ 1429              	IIC_port:
+ 1430 0000 00000000 		.space	32
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 32
+
+
+ 1430      00000000 
+ 1430      00000000 
+ 1430      00000000 
+ 1430      00000000 
+ 1431              		.text
+ 1432              	.Letext0:
+ 1433              		.file 2 "d:\\program files\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machin
+ 1434              		.file 3 "d:\\program files\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_
+ 1435              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 1436              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1437              		.file 6 "bsp/Inc/bsp_iic.h"
+ 1438              		.file 7 "backup/Inc/myfunc.h"
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 33
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bsp_iic.c
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:20     .text.SDA_Set_Output:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:26     .text.SDA_Set_Output:00000000 SDA_Set_Output
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:82     .text.SDA_Set_Output:00000034 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:88     .text.SDA_Set_Input:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:94     .text.SDA_Set_Input:00000000 SDA_Set_Input
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:146    .text.SDA_Set_Input:00000030 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:152    .text.Master_Start:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:158    .text.Master_Start:00000000 Master_Start
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:217    .text.Master_Start:00000044 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:225    .text.Master_Stop:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:231    .text.Master_Stop:00000000 Master_Stop
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:290    .text.Master_Stop:00000044 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:298    .text.Master_N_ACK:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:304    .text.Master_N_ACK:00000000 Master_N_ACK
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:384    .text.Master_N_ACK:00000064 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:392    .text.Master_wait_ACK:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:398    .text.Master_wait_ACK:00000000 Master_wait_ACK
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:475    .text.Master_wait_ACK:00000054 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:483    .text.Master_Transmit_Byte:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:489    .text.Master_Transmit_Byte:00000000 Master_Transmit_Byte
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:600    .text.Master_Transmit_Byte:00000078 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:608    .text.Master_Receive_Byte:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:614    .text.Master_Receive_Byte:00000000 Master_Receive_Byte
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:722    .text.Master_Receive_Byte:00000068 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:730    .text.Master_Transmit:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:736    .text.Master_Transmit:00000000 Master_Transmit
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:881    .text.Master_Transmit:0000007c $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:890    .text.Master_Receive:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:896    .text.Master_Receive:00000000 Master_Receive
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1040   .text.Master_Receive:00000078 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1049   .text.Master_Complex:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1055   .text.Master_Complex:00000000 Master_Complex
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1274   .text.Master_Complex:000000d8 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1283   .text.BSP_IIC_Init:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1289   .text.BSP_IIC_Init:00000000 BSP_IIC_Init
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1302   .text.BSP_IIC_setpara:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1308   .text.BSP_IIC_setpara:00000000 BSP_IIC_setpara
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1356   .text.BSP_IIC_setpara:00000028 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1361   .text.BSP_IIC_sta:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1367   .text.BSP_IIC_sta:00000000 BSP_IIC_sta
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1387   .text.BSP_IIC_sta:0000000c $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1408   .bss.GPIO_Pin_DA:00000000 GPIO_Pin_DA
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1401   .bss.GPIO_Pin_CL:00000000 GPIO_Pin_CL
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1422   .bss.GPIOx_DA:00000000 GPIOx_DA
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1415   .bss.GPIOx_CL:00000000 GPIOx_CL
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1429   .bss.IIC_port:00000000 IIC_port
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1397   .bss.GPIO_Pin_CL:00000000 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1404   .bss.GPIO_Pin_DA:00000000 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1411   .bss.GPIOx_CL:00000000 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1418   .bss.GPIOx_DA:00000000 $d
+C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s:1425   .bss.IIC_port:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_DeInit
+HAL_GPIO_Init
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\ccNlZTX3.s 			page 34
+
+
+HAL_GPIO_WritePin
+delay_us
+HAL_GPIO_ReadPin
+delay_ms

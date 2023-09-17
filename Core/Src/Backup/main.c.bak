@@ -64,8 +64,6 @@ int rece = 0;
 uint32_t time = 0;
 uint32_t tick1 = 0;
 uint32_t tick2 = 0;
-
-software_IIC_Port my_port;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,8 +115,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  //Instance_Init();
-  
+  Instance_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

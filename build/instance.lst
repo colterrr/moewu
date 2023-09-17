@@ -1,0 +1,147 @@
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"instance.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Instance_Init,"ax",%progbits
+  20              		.align	1
+  21              		.global	Instance_Init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	Instance_Init:
+  27              	.LFB235:
+  28              		.file 1 "backup/Src/instance.c"
+   1:backup/Src/instance.c **** #include "instance.h"
+   2:backup/Src/instance.c **** #include "CO2_sensor.h"
+   3:backup/Src/instance.c **** #include "SHT_sensor.h"
+   4:backup/Src/instance.c **** #include "UV_sensor.h"
+   5:backup/Src/instance.c **** #include "ESP_01s.h"
+   6:backup/Src/instance.c **** #include "lcd.h"
+   7:backup/Src/instance.c **** #include "touch.h"
+   8:backup/Src/instance.c **** 
+   9:backup/Src/instance.c **** #include "bsp_adc.h"
+  10:backup/Src/instance.c **** #include "bsp_uart.h"
+  11:backup/Src/instance.c **** #include "bsp_spi.h"
+  12:backup/Src/instance.c **** 
+  13:backup/Src/instance.c **** instance database;
+  14:backup/Src/instance.c **** 
+  15:backup/Src/instance.c **** void Instance_Init(void)
+  16:backup/Src/instance.c **** {
+  29              		.loc 1 16 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  17:backup/Src/instance.c ****     BSP_UART_Init();
+  38              		.loc 1 17 5 view .LVU1
+  39 0002 FFF7FEFF 		bl	BSP_UART_Init
+  40              	.LVL0:
+  18:backup/Src/instance.c ****     BSP_SPI_Init();
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s 			page 2
+
+
+  41              		.loc 1 18 5 view .LVU2
+  42 0006 FFF7FEFF 		bl	BSP_SPI_Init
+  43              	.LVL1:
+  19:backup/Src/instance.c ****     BSP_IIC_Init();
+  44              		.loc 1 19 5 view .LVU3
+  45 000a FFF7FEFF 		bl	BSP_IIC_Init
+  46              	.LVL2:
+  20:backup/Src/instance.c **** 
+  21:backup/Src/instance.c ****     SHT_sensor_Init();
+  47              		.loc 1 21 5 view .LVU4
+  48 000e FFF7FEFF 		bl	SHT_sensor_Init
+  49              	.LVL3:
+  22:backup/Src/instance.c ****     UV_sensor_Init();
+  50              		.loc 1 22 5 view .LVU5
+  51 0012 FFF7FEFF 		bl	UV_sensor_Init
+  52              	.LVL4:
+  23:backup/Src/instance.c ****     CO2_sensor_Init();
+  53              		.loc 1 23 5 view .LVU6
+  54 0016 FFF7FEFF 		bl	CO2_sensor_Init
+  55              	.LVL5:
+  24:backup/Src/instance.c ****     ESP_Init();
+  56              		.loc 1 24 5 view .LVU7
+  57 001a FFF7FEFF 		bl	ESP_Init
+  58              	.LVL6:
+  25:backup/Src/instance.c ****     Lcd_Init();
+  59              		.loc 1 25 5 view .LVU8
+  60 001e FFF7FEFF 		bl	Lcd_Init
+  61              	.LVL7:
+  26:backup/Src/instance.c ****     Touch_Init();
+  62              		.loc 1 26 5 view .LVU9
+  63 0022 FFF7FEFF 		bl	Touch_Init
+  64              	.LVL8:
+  27:backup/Src/instance.c **** }...
+  65              		.loc 1 27 1 is_stmt 0 view .LVU10
+  66 0026 08BD     		pop	{r3, pc}
+  67              		.cfi_endproc
+  68              	.LFE235:
+  70              		.global	database
+  71              		.section	.bss.database,"aw",%nobits
+  72              		.align	2
+  75              	database:
+  76 0000 00000000 		.space	16
+  76      00000000 
+  76      00000000 
+  76      00000000 
+  77              		.text
+  78              	.Letext0:
+  79              		.file 2 "d:\\program files\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machin
+  80              		.file 3 "d:\\program files\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_
+  81              		.file 4 "backup/Inc/error_handle.h"
+  82              		.file 5 "Module/SHT_sensor/SHT_sensor.h"
+  83              		.file 6 "Module/UV_sensor/UV_sensor.h"
+  84              		.file 7 "Module/CO2_sensor/CO2_sensor.h"
+  85              		.file 8 "backup/Inc/instance.h"
+  86              		.file 9 "bsp/Inc/bsp_uart.h"
+  87              		.file 10 "bsp/Inc/bsp_spi.h"
+  88              		.file 11 "bsp/Inc/bsp_iic.h"
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s 			page 3
+
+
+  89              		.file 12 "Module/ESP_01s/ESP_01s.h"
+  90              		.file 13 "Module/screen/lcd.h"
+  91              		.file 14 "Module/screen/touch.h"
+  92              		.file 15 "Module/screen/font.h"
+ARM GAS  C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 instance.c
+C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s:20     .text.Instance_Init:00000000 $t
+C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s:26     .text.Instance_Init:00000000 Instance_Init
+C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s:75     .bss.database:00000000 database
+C:\Users\YKESH~1\AppData\Local\Temp\cc1XS9qY.s:72     .bss.database:00000000 $d
+
+UNDEFINED SYMBOLS
+BSP_UART_Init
+BSP_SPI_Init
+BSP_IIC_Init
+SHT_sensor_Init
+UV_sensor_Init
+CO2_sensor_Init
+ESP_Init
+Lcd_Init
+Touch_Init

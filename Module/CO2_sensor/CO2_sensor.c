@@ -40,7 +40,7 @@ error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uin
     //头部校对
     for (uint8_t k = 0; i < len && k < 4; k++, i++){
         if (pdata[i] != head[k])
-            return data_error;
+            return data_err;
     }
     //ppm数据
     p1 = i;
@@ -51,7 +51,7 @@ error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uin
     //中部校对
     for (uint8_t k = 0; i < len &&  k < 9; k++, i++){
         if (pdata[i] != middle[k])
-            return data_error;
+            return data_err;
     }
     //ppd数据
     p2 = i;
@@ -62,11 +62,11 @@ error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uin
     //尾部校对
     for (uint8_t k = 0; i < len && k < 3; k++, i++){
         if (pdata[i] != tail[k])
-            return data_error;
+            return data_err;
     }
     //数据长度校对
     if (i == len && pdata[i-1] != 'd'){
-        return data_error;
+        return data_err;
     }
 
     data_obj->CO2_ppm  = Str_to_uint(pdata + p1, count1);
@@ -83,7 +83,7 @@ void CO2_callback(UART_HandleTypeDef* huart, uint8_t* pdata, uint16_t len)
             my_CO2_data.step = data_recv;
         }
         else {
-            database.CO2_sta = module_error;
+            database.CO2_sta = module_err;
             BSP_UART_send(CO2_PORT, command, my_CO2_data.cmd_len);
         }
     }

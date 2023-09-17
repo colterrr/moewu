@@ -27,26 +27,24 @@ SHT_data my_SHT_data;
 uint8_t SHT_txbuffer[10] = {};
 uint8_t SHT_rxbuffer[10] = {};
 
-error_handle_type SHT_sensor_set_periodic(software_IIC_Port* port, setting_periodic_mode mode, uint8_t ADDR)
+error_handle_type SHT_sensor_set_periodic(uint8_t iic_index, setting_periodic_mode mode)
 {
-    port->slave_ADDR = ADDR;
     memcpy(SHT_txbuffer, periodic_set + mode * 2, 2);
-    Master_Transmit(port, SHT_txbuffer, 2);
-    if(port->status == IIC_ERR){
-        return trans_error;
+    Master_Transmit(iic_index, SHT_txbuffer, 2);
+    if(!BSP_IIC_sta(iic_index)){
+        return trans_err;
     }
     else {
         return normal;
     }
 }
 
-error_handle_type SHT_sensor_break(software_IIC_Port* port, uint8_t ADDR)
+error_handle_type SHT_sensor_break(uint8_t iic_index, uint8_t ADDR)
 {
-    port->slave_ADDR = ADDR;
     memcpy(SHT_txbuffer, periodic_break, 2);
-    Master_Transmit(port, SHT_txbuffer, 2);
-    if(port->status == IIC_ERR){
-        return trans_error;
+    Master_Transmit(iic_index, SHT_txbuffer, 2);
+    if(!BSP_IIC_sta(iic_index)){
+        return trans_err;
     }
     else {
         return normal;
@@ -61,12 +59,11 @@ void SHT_arr_Create(SHT_data* data_obj)
     data_obj->pdata_real = malloc(num * sizeof(real_data));
 }
 
-error_handle_type SHT_sensor_data_handle(software_IIC_Port* port, temp_humid_data* data_obj, uint8_t ADDR)
+error_handle_type SHT_sensor_data_handle(uint8_t iic_index, temp_humid_data* data_obj)
 {
-    port->slave_ADDR = ADDR;
     memcpy(SHT_txbuffer, periodic_fetch, 2);
-    Master_Complex(port, SHT_txbuffer, 2, SHT_rxbuffer, 6);
-    if (port->status == IIC_ERR) return trans_error;
+    Master_Complex(SHT_PORT_INDEX, SHT_txbuffer, 2, SHT_rxbuffer, 6);
+    if (!BSP_IIC_sta(iic_index)) return trans_err;
 
     //(CRC校验?)
 
@@ -90,12 +87,14 @@ void SHT_sensor_Init(void)
 {
     database.SHT_data_p = &my_SHT_data;
     my_SHT_data.num = SHT_NUM;
+    BSP_IIC_setpara(SHT_PORT_INDEX, GPIOB, GPIO_PIN_6, GPIOB, GPIO_PIN_7, SHT_ADDR);
+
     SHT_arr_Create(&my_SHT_data);
-    SHT_sensor_set_periodic(database.IIC_Port_p, Medium_1, 0x45);
+    SHT_sensor_set_periodic(SHT_PORT_INDEX, Medium_1);
 }
 
 void sht_sensor_task(void)
 {
-    database.SHT_sta = SHT_sensor_data_handle(database.IIC_Port_p, my_SHT_data.pdata, 0x45);
+    database.SHT_sta = SHT_sensor_data_handle(SHT_PORT_INDEX, my_SHT_data.pdata);
     SHT_data_calc(&my_SHT_data);
 }

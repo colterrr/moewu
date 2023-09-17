@@ -1,5 +1,5 @@
-#ifndef _SOFTWARE_IIC_H_
-#define _SOFTWARE_IIC_H_
+#ifndef _BSP_IIC_H_
+#define _BSP_IIC_H_
 
 #include "stdint.h"
 #include "main.h"
@@ -12,14 +12,7 @@
 // t_HD-DAT = t_SU-DAT = t_HD-STA = t_SU-STA = t_HD-STO = t_SU-STO = 2us
 // t_R_SDA, t_F_SDA, t_R_SCL, t_F_SCL 忽略不计
 
-/***软件IIC的GPIO在这里配置***/
-
-#define GPIOx_CL GPIOB
-#define GPIOx_DA GPIOB
-#define GPIO_Pin_CL GPIO_PIN_6
-#define GPIO_Pin_DA GPIO_PIN_7
-
-/***----------------------***/
+#define IIC_MAX_NUM 2
 
 #define H_SCL HAL_GPIO_WritePin(GPIOx_CL,GPIO_Pin_CL,GPIO_PIN_SET)
 #define L_SCL HAL_GPIO_WritePin(GPIOx_CL,GPIO_Pin_CL,GPIO_PIN_RESET)
@@ -47,19 +40,19 @@ typedef struct software_IIC_Port_s
     //uint16_t speed_kHZ;
     uint8_t slave_ADDR;        //7位从机地址，最高位无意义
     IIC_comu_status status;
+
+    GPIO_TypeDef* IOx_CL;
+    GPIO_TypeDef* IOx_DA;
+    uint16_t Pin_CL;
+    uint16_t Pin_DA;
 }software_IIC_Port;
 
-void Master_Transmit(software_IIC_Port* port, uint8_t* pdata, uint16_t len);
-void Master_Receive(software_IIC_Port* port, uint8_t* rxbuf, uint16_t len);
-void Master_Complex(software_IIC_Port* port, uint8_t* pdata, uint16_t len_t, uint8_t* rxbuf, uint16_t len_r);
+void BSP_IIC_Init(void);
+void BSP_IIC_setpara(uint8_t port_index, GPIO_TypeDef* IOx_CL, uint16_t Pin_CL, GPIO_TypeDef* IOx_DA, uint16_t Pin_DA, uint8_t ADDR);
+IIC_comu_status BSP_IIC_sta(uint8_t port_index);
 
-void Master_Transmit_Byte(uint8_t Byte);
-uint8_t Master_Receive_Byte();
-
-void Master_Start();
-void Master_Stop();
-
-uint8_t Master_wait_ACK();
-void Master_N_ACK(ACK_value sig);
+void Master_Transmit(uint8_t port_index, uint8_t* pdata, uint16_t len);
+void Master_Receive(uint8_t port_index, uint8_t* rxbuf, uint16_t len);
+void Master_Complex(uint8_t port_index, uint8_t* pdata, uint16_t len_t, uint8_t* rxbuf, uint16_t len_r);
 
 #endif

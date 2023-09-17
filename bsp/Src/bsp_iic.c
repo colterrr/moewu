@@ -1,10 +1,16 @@
-#include "software_IIC.h"
+#include "bsp_iic.h"
 #include "stdlib.h"
 #include "string.h"
 #include "myfunc.h"
 #include "instance.h"
 
-software_IIC_Port my_port;
+software_IIC_Port IIC_port[IIC_MAX_NUM];
+
+GPIO_TypeDef* GPIOx_CL;
+GPIO_TypeDef* GPIOx_DA;
+uint16_t GPIO_Pin_CL;
+uint16_t GPIO_Pin_DA;
+
 /***SDA输出输入模式改变***/
 
 void SDA_Set_Output()
@@ -142,12 +148,19 @@ uint8_t Master_Receive_Byte()
 
 /***发送和接收多字节数据***/
 
-void Master_Transmit(software_IIC_Port* port, uint8_t* pdata, uint16_t len)
+void Master_Transmit(uint8_t port_index, uint8_t* pdata, uint16_t len)
 {
+    software_IIC_Port* port = IIC_port + port_index;
+    
+    GPIOx_CL = port->IOx_CL;
+    GPIO_Pin_CL = port->Pin_CL;
+    GPIOx_DA = port->IOx_DA;
+    GPIO_Pin_DA = port->Pin_DA;
     uint8_t ADDR = port->slave_ADDR;
+
     uint8_t i = 0;
 
-    Master_Start();
+    Master_Start(port);
     Master_Transmit_Byte(ADDR << 1);//从机地址 + W
     if(Master_wait_ACK() == 0xff){
         //收到NACK
@@ -171,9 +184,16 @@ void Master_Transmit(software_IIC_Port* port, uint8_t* pdata, uint16_t len)
     return;
 }
 
-void Master_Receive(software_IIC_Port* port, uint8_t* rxbuf, uint16_t len)
+void Master_Receive(uint8_t port_index, uint8_t* rxbuf, uint16_t len)
 {
+    software_IIC_Port* port = IIC_port + port_index;
+
+    GPIOx_CL = port->IOx_CL;
+    GPIO_Pin_CL = port->Pin_CL;
+    GPIOx_DA = port->IOx_DA;
+    GPIO_Pin_DA = port->Pin_DA;
     uint8_t ADDR = port->slave_ADDR;
+
     uint8_t i = 0;
 
     Master_Start();
@@ -189,14 +209,21 @@ void Master_Receive(software_IIC_Port* port, uint8_t* rxbuf, uint16_t len)
         Master_N_ACK(!(len - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
     }
 
-    Master_Stop();
+    Master_Stop(port);
     port->status = IIC_OK;
     return;
 }
 
-void Master_Complex(software_IIC_Port* port, uint8_t* pdata, uint16_t len_t, uint8_t* rxbuf, uint16_t len_r)
+void Master_Complex(uint8_t port_index, uint8_t* pdata, uint16_t len_t, uint8_t* rxbuf, uint16_t len_r)
 {
+    software_IIC_Port* port = IIC_port + port_index;
+
+    GPIOx_CL = port->IOx_CL;
+    GPIO_Pin_CL = port->Pin_CL;
+    GPIOx_DA = port->IOx_DA;
+    GPIO_Pin_DA = port->Pin_DA;
     uint8_t ADDR = port->slave_ADDR;
+
     uint8_t i = 0;
 
     Master_Start();
@@ -238,7 +265,21 @@ void Master_Complex(software_IIC_Port* port, uint8_t* pdata, uint16_t len_t, uin
 
 /***-----------------------------------------------***/
 
-void soft_IIC_Init(void)
+void BSP_IIC_Init(void)
 {
-    database.IIC_Port_p = &my_port;
+
+}
+
+void BSP_IIC_setpara(uint8_t port_index, GPIO_TypeDef* IOx_CL, uint16_t Pin_CL, GPIO_TypeDef* IOx_DA, uint16_t Pin_DA, uint8_t ADDR)
+{
+    IIC_port[port_index].IOx_CL = IOx_CL;
+    IIC_port[port_index].IOx_DA = IOx_DA;
+    IIC_port[port_index].Pin_CL = Pin_CL;
+    IIC_port[port_index].Pin_DA = Pin_DA;
+    IIC_port[port_index].slave_ADDR = ADDR;
+}
+
+IIC_comu_status BSP_IIC_sta(uint8_t port_index)
+{
+    return IIC_port[port_index].status;
 }

@@ -31,7 +31,7 @@
 #include "string.h"
 
 #include "myfunc.h"
-#include "software_IIC.h"
+#include "bsp_iic.h"
 
 #include "instance.h"
 #include "SHT_sensor.h"
