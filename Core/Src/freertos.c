@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SHT_sensor.h"
+#include "ui.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,6 +62,13 @@ const osThreadAttr_t sht30Task_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for GUITask */
+osThreadId_t GUITaskHandle;
+const osThreadAttr_t GUITask_attributes = {
+  .name = "GUITask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -69,6 +77,7 @@ const osThreadAttr_t sht30Task_attributes = {
 
 void StartDefaultTask(void *argument);
 void StartSht30Task(void *argument);
+void StartGUITask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -104,6 +113,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of sht30Task */
   sht30TaskHandle = osThreadNew(StartSht30Task, NULL, &sht30Task_attributes);
+
+  /* creation of GUITask */
+  GUITaskHandle = osThreadNew(StartGUITask, NULL, &GUITask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -152,6 +164,26 @@ void StartSht30Task(void *argument)
     vTaskDelayUntil(&sht30_currentTime, 500);
   }
   /* USER CODE END StartSht30Task */
+}
+
+/* USER CODE BEGIN Header_StartGUITask */
+/**
+* @brief Function implementing the GUITask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartGUITask */
+void StartGUITask(void *argument)
+{
+  /* USER CODE BEGIN StartGUITask */
+  /* Infinite loop */
+  portTickType GUI_currentTime;
+  for(;;)
+  {
+    UI_task();
+    vTaskDelayUntil(&GUI_currentTime, 200);
+  }
+  /* USER CODE END StartGUITask */
 }
 
 /* Private application code --------------------------------------------------*/

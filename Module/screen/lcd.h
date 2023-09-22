@@ -27,9 +27,6 @@ typedef enum Draw_Mode_e
 }Draw_Mode;
 
 void Lcd_Init(void);
-void Lcd_DrawRectangle(uint16_t xS, uint16_t xE, uint16_t yS, uint16_t yE, uint16_t color);
-
-void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t back_color, uint16_t font_color);
-void Lcd_DrawChinese(uint16_t c, uint16_t x, uint16_t y);
-
+void Lcd_DrawRectangle(uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE, uint16_t color);
+void Lcd_ReadDisplaySta();
 #endif

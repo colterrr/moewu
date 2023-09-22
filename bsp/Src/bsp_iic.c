@@ -160,7 +160,7 @@ void Master_Transmit(uint8_t port_index, uint8_t* pdata, uint16_t len)
 
     uint8_t i = 0;
 
-    Master_Start(port);
+    Master_Start();
     Master_Transmit_Byte(ADDR << 1);//从机地址 + W
     if(Master_wait_ACK() == 0xff){
         //收到NACK
@@ -209,7 +209,7 @@ void Master_Receive(uint8_t port_index, uint8_t* rxbuf, uint16_t len)
         Master_N_ACK(!(len - i - 1)); //根据是否收完足够的数据来发送ACK或NACK
     }
 
-    Master_Stop(port);
+    Master_Stop();
     port->status = IIC_OK;
     return;
 }

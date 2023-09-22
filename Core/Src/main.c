@@ -21,7 +21,6 @@
 #include "cmsis_os.h"
 #include "adc.h"
 #include "dma.h"
-#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -36,6 +35,7 @@
 #include "instance.h"
 #include "SHT_sensor.h"
 #include "eeprom.h"
+#include "lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,7 +108,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART1_UART_Init();
-  MX_SPI1_Init();
   MX_ADC1_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
@@ -116,6 +115,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   Instance_Init();
+  Lcd_DrawRectangle(100, 100, 150, 150, 0xFF0F);
   /* USER CODE END 2 */
 
   /* Init scheduler */
