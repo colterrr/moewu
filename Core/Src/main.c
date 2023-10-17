@@ -21,6 +21,7 @@
 #include "cmsis_os.h"
 #include "adc.h"
 #include "dma.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -112,10 +113,11 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_USART2_UART_Init();
+  MX_TIM3_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
   Instance_Init();
-  Lcd_DrawRectangle(100, 100, 150, 150, 0xFF0F);
   /* USER CODE END 2 */
 
   /* Init scheduler */

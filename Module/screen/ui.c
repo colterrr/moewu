@@ -2,8 +2,12 @@
 #include "touch.h"
 #include "lcd.h"
 
+void UI_InitDraw(void)
+{
+    Lcd_Fill(DEFAULT_COLOR);
+}
+
 void UI_task(void)
 {
-    Lcd_DrawRectangle(100,100,150,150, 0xFFFF);
-    //Lcd_ReadDisplaySta();
+    
 }

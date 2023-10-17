@@ -1,31 +1,54 @@
 
 
 
+Breakpoint=D:/workfile/lixiang/moewu/backup/Src/instance.c:25, State=BP_STATE_ON
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:284, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:286, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:290:1, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:299, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:312, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:317:1, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:332:5, State=BP_STATE_DISABLED
+Breakpoint=D:/workfile/lixiang/moewu/Module/screen/lcd.c:371, State=BP_STATE_DISABLED
 Breakpoint=0x00000000, State=BP_STATE_DISABLED
-OpenDocument="main.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/main.c", Line=71
+OpenDocument="port.c", FilePath="D:/workfile/lixiang/moewu/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c", Line=417
+OpenDocument="main.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/main.c", Line=69
+OpenDocument="lcd.c", FilePath="D:/workfile/lixiang/moewu/Module/screen/lcd.c", Line=294
 OpenDocument="instance.c", FilePath="D:/workfile/lixiang/moewu/backup/Src/instance.c", Line=0
-OpenDocument="stm32f4xx_it.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/stm32f4xx_it.c", Line=230
+OpenDocument="stm32f4xx_it.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/stm32f4xx_it.c", Line=217
 OpenDocument="ui.c", FilePath="D:/workfile/lixiang/moewu/Module/screen/ui.c", Line=0
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=3110
-OpenDocument="bsp_spi.c", FilePath="D:/workfile/lixiang/moewu/bsp/Src/bsp_spi.c", Line=0
-OpenDocument="lcd.c", FilePath="D:/workfile/lixiang/moewu/Module/screen/lcd.c", Line=180
-OpenDocument="bsp_iic.c", FilePath="D:/workfile/lixiang/moewu/bsp/Src/bsp_iic.c", Line=230
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=2360
+OpenDocument="bsp_spi.c", FilePath="D:/workfile/lixiang/moewu/bsp/Src/bsp_spi.c", Line=47
+OpenDocument="startup_stm32f407xx.s", FilePath="D:/workfile/lixiang/moewu/startup_stm32f407xx.s", Line=43
+OpenDocument="bsp_iic.c", FilePath="D:/workfile/lixiang/moewu/bsp/Src/bsp_iic.c", Line=215
 OpenDocument="SHT_sensor.c", FilePath="D:/workfile/lixiang/moewu/Module/SHT_sensor/SHT_sensor.c", Line=0
 OpenDocument="myfunc.c", FilePath="D:/workfile/lixiang/moewu/backup/Src/myfunc.c", Line=0
 OpenDocument="tasks.c", FilePath="D:/workfile/lixiang/moewu/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=1249
-OpenDocument="port.c", FilePath="D:/workfile/lixiang/moewu/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c", Line=420
+OpenDocument="portmacro.h", FilePath="D:/workfile/lixiang/moewu/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h", Line=174
 OpenDocument="ESP_01s.c", FilePath="D:/workfile/lixiang/moewu/Module/ESP_01s/ESP_01s.c", Line=0
-OpenDocument="stm32f4xx_hal.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=310
-OpenDocument="stm32f4xx_hal_gpio.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c", Line=401
-OpenDocument="freertos.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/freertos.c", Line=138
+OpenDocument="stm32f4xx_hal.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=307
+OpenDocument="freertos.c", FilePath="D:/workfile/lixiang/moewu/Core/Src/freertos.c", Line=124
+OpenDocument="stm32f4xx_hal_gpio.c", FilePath="D:/workfile/lixiang/moewu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c", Line=404
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=1, w=299, h=593, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=449, h=900, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=299, h=306, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=1, w=298, h=713, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=738, h=1124, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=298, h=410, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[1236;100;100;100;218]
 TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[204;100;100;100;620]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[159;131;118;100]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[159;131;118;330]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
-TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[26;26;26;26]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;353]
+WatchedExpression="Lcd_txbuffer", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="Lcd_rxbuffer", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="SPI_Port", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="color", Window=Watched Data 1
+WatchedExpression="tem", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="pt", Window=Watched Data 1
+WatchedExpression="char_32", Window=Watched Data 1
+WatchedExpression="char_16", Window=Watched Data 1
+WatchedExpression="j", Window=Watched Data 1
+WatchedExpression="ans", Window=Watched Data 1
+WatchedExpression="chinese_16", Window=Watched Data 1
+WatchedExpression="kk", Window=Watched Data 1
