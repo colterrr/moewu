@@ -88,7 +88,6 @@ Module/EEPROM/eeprom.c \
 Module/screen/lcd.c \
 Module/screen/touch.c \
 Module/screen/ui.c \
-Module/screen/font.c \
 Module/PTC/ptc.c \
 backup/Src/myfunc.c \
 backup/Src/error_handle.c \

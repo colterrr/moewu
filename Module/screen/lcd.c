@@ -3,11 +3,11 @@
 #include "gpio.h"
 #include "bsp_spi.h"
 #include "myfunc.h"
+#include "font.h"
 
 uint8_t Lcd_txbuffer[10] = {};
 uint8_t Lcd_rxbuffer[10] = {};
 
-extern uint8_t char_32[][16];
 /***发送数据***/
 void send_data(uint8_t data)
 {
@@ -298,20 +298,19 @@ void Lcd_Init(void)
 
     Lcd_Fill(WHITE);
     Lcd_DrawRectangle(0, 0, 50, 100, RED);
-    //Lcd_DrawChar('F', 50, 100, c16, merge, WHITE, BLACK);
-    //Lcd_DrawStrMiddle("ABCDE!!!", 8, 240, 160, c16, overlay, YELLOW, BLACK);
-    Lcd_rxbuffer[5] = char_32[14][10];
-    Lcd_DrawChar('!', 50, 100, c32, merge, WHITE, BLACK);
+    Lcd_DrawChar('F', 50, 100, c32, merge, WHITE, BLACK);
+    Lcd_DrawStrMiddle("ABCDE!!!", 8, 240, 160, c32, overlay, BLACK, YELLOW);
+    Lcd_DrawChinese("屋", 200, 0, overlay, BLACK, YELLOW);
 }
 
-uint16_t access_char32(uint8_t c, uint8_t j)
-{
-    uint8_t index = c - ASCII_OFFSET;
-    uint16_t ans = char_32[index * 4 + j/8][(j - j % 8)*2];
-    ans <<= 8;
-    ans &= char_32[index * 4 + j/8][(j - j % 8)*2 + 1];
-    return ans;
-}
+// uint16_t access_char32(uint8_t c, uint8_t j)
+// {
+//     uint8_t index = c - ASCII_OFFSET;
+//     uint16_t ans = char_32[index * 4 + j/8][(j - j % 8)*2];
+//     ans <<= 8;
+//     ans &= char_32[index * 4 + j/8][(j - j % 8)*2 + 1];
+//     return ans;
+// }
 
 void Lcd_Fill(uint16_t color)
 {
@@ -332,7 +331,7 @@ void Lcd_DrawRectangle(uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE, uint1
     NSS_ABORT;
 }
 
-void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t back_color, uint16_t font_color)
+void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
     uint16_t x_max = 8*size - 1;
     uint16_t y_max = 16*size - 1;
@@ -368,8 +367,11 @@ void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode m
             // pt = (uint8_t*)char_32;
             // tem = pt[(c - ASCII_OFFSET) * 64 + j*2];
             // tem = (tem << 8) & pt[(c - ASCII_OFFSET) * 64 + j*2 + 1];
-            tem = char_32[11][11];
-            tem = access_char32(c, j);
+            // tem = char_32[11][11];
+            // tem = access_char32(c, j);
+            //tem = *((uint16_t*)(char_32 + (c - ASCII_OFFSET) * 64 + j*2));
+            tem = char_32[(c - ASCII_OFFSET) * 64 + j*2];
+            tem = (tem << 8) | char_32[(c - ASCII_OFFSET) * 64 + j*2 + 1];
             for (uint8_t i = 0; i <= x_max; i++){
                 if (tem & 0x8000){
                     send_16bit_color(font_color);
@@ -405,9 +407,45 @@ void Lcd_DrawStrMiddle(uint8_t* str, uint8_t len, uint16_t x_middle, uint16_t y_
     }
 }
 
-void Lcd_DrawChinese(uint16_t c, uint16_t x, uint16_t y)
+void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
-    
+    // uint16_t x_max = 16*size - 1;
+    // uint16_t y_max = 16*size - 1;
+    // uint16_t tem = 0;
+    // set_window(x, y, x + x_max, y + y_max);
+    uint32_t tem;
+    set_window(x, y, x + 31, y + 31);
+    send_comd(0x2C);
+    NSS_PICK;
+    DATA_MODE;
+
+    uint8_t k = sizeof(chinese_32) / 130;
+    while(k > 0){
+        if (index[0] == chinese_32[k - 1].index[0] && index[1] == chinese_32[k - 1].index[1])break;
+        k--;
+    }
+    if (k == 0)
+        return;
+    k--;
+    for (uint8_t j = 0; j < 31; j++){
+        tem = chinese_32[k].dot[4*j + 3];
+        tem |= (uint32_t)chinese_32[k].dot[4*j + 2] << 8;
+        tem |= (uint32_t)chinese_32[k].dot[4*j + 1] << 16;
+        tem |= (uint32_t)chinese_32[k].dot[4*j] << 24;
+        for (uint8_t i = 0; i < 31; i++){
+            if (tem & 0x80000000){
+                send_16bit_color(font_color);
+            }
+            else {
+                if(mode) send_16bit_color(back_color);
+                else {
+                    send_16bit_color(DEFAULT_COLOR);
+                }
+            }
+            tem <<= 1;
+        }
+    }
+    NSS_ABORT;
 }
 
 void Lcd_ReadDisplaySta()
