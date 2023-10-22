@@ -297,20 +297,9 @@ void Lcd_Init(void)
 	send_comd(0x29);
 
     Lcd_Fill(WHITE);
-    Lcd_DrawRectangle(0, 0, 50, 100, RED);
-    Lcd_DrawChar('F', 50, 100, c32, merge, WHITE, BLACK);
-    Lcd_DrawStrMiddle("ABCDE!!!", 8, 240, 160, c32, overlay, BLACK, YELLOW);
-    Lcd_DrawChinese("屋", 200, 0, overlay, BLACK, YELLOW);
+    Lcd_DrawRectangle(0, 0, 480, 32, GRAY);
+    Lcd_DrawStrMiddle("moewu猫屋主控", 17, 240, 16, c32, overlay, BLACK, GRAY);
 }
-
-// uint16_t access_char32(uint8_t c, uint8_t j)
-// {
-//     uint8_t index = c - ASCII_OFFSET;
-//     uint16_t ans = char_32[index * 4 + j/8][(j - j % 8)*2];
-//     ans <<= 8;
-//     ans &= char_32[index * 4 + j/8][(j - j % 8)*2 + 1];
-//     return ans;
-// }
 
 void Lcd_Fill(uint16_t color)
 {
@@ -364,12 +353,6 @@ void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode m
     else if(size == c32){
         uint8_t* pt;
         for (uint8_t j = 0; j <= y_max; j++){
-            // pt = (uint8_t*)char_32;
-            // tem = pt[(c - ASCII_OFFSET) * 64 + j*2];
-            // tem = (tem << 8) & pt[(c - ASCII_OFFSET) * 64 + j*2 + 1];
-            // tem = char_32[11][11];
-            // tem = access_char32(c, j);
-            //tem = *((uint16_t*)(char_32 + (c - ASCII_OFFSET) * 64 + j*2));
             tem = char_32[(c - ASCII_OFFSET) * 64 + j*2];
             tem = (tem << 8) | char_32[(c - ASCII_OFFSET) * 64 + j*2 + 1];
             for (uint8_t i = 0; i <= x_max; i++){
@@ -389,22 +372,35 @@ void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode m
     NSS_ABORT;
 }
 
-void Lcd_DrawStr(uint8_t* str, uint8_t len, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t back_color, uint16_t font_color)
+void Lcd_DrawStr(uint8_t* str, uint8_t len, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
-    uint16_t c_xlen = 8 * size;
+    uint16_t x_del_len = 0;
     for (uint8_t i = 0; i < len; i++){
-        Lcd_DrawChar(str[i], x + i * c_xlen, y, size, mode, back_color, font_color);
+        if(str[i] >= 32 && str[i] <= 126){
+            Lcd_DrawChar(str[i], x + x_del_len, y, size, mode, font_color, back_color);
+            x_del_len += 8 * size;
+        }
+        else {
+            Lcd_DrawChinese(str + i, x + x_del_len, y, mode, font_color, back_color);
+            x_del_len += 16 * size;
+            i+=2;
+        }
     }
 }
 
-void Lcd_DrawStrMiddle(uint8_t* str, uint8_t len, uint16_t x_middle, uint16_t y_middle, Font_Size size, Draw_Mode mode, uint16_t back_color, uint16_t font_color)
+void Lcd_DrawStrMiddle(uint8_t* str, uint8_t len, uint16_t x_middle, uint16_t y_middle, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
-    uint16_t pixel_len = 8 * size * len;
-    uint16_t c_xlen = 8 * size;
-    uint16_t c_ypos = y_middle - 8 * size;
-    for (uint8_t i = 0; i < len; i++){
-        Lcd_DrawChar(str[i], x_middle - pixel_len / 2 + i * c_xlen, c_ypos, size, mode, back_color, font_color);
+    uint16_t x_del_len = 0;
+    uint8_t i = 0;
+    while(i < len){
+        if (str[i] >= 32 && str[i] <= 126)x_del_len += 8 * size;
+        else {
+            x_del_len += 16 * size;
+            i+=2;
+        }
+        i++;
     }
+    Lcd_DrawStr(str, len, x_middle - x_del_len / 2, y_middle - 8 *size, size, mode, font_color, back_color);
 }
 
 void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
@@ -419,20 +415,20 @@ void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uin
     NSS_PICK;
     DATA_MODE;
 
-    uint8_t k = sizeof(chinese_32) / 130;
+    uint8_t k = sizeof(chinese_32) / sizeof(Chinese_Font);
     while(k > 0){
-        if (index[0] == chinese_32[k - 1].index[0] && index[1] == chinese_32[k - 1].index[1])break;
+        if (index[0] == chinese_32[k - 1].index[0] && index[1] == chinese_32[k - 1].index[1] && index[2] == chinese_32[k - 1].index[2])break;
         k--;
     }
     if (k == 0)
         return;
     k--;
-    for (uint8_t j = 0; j < 31; j++){
+    for (uint8_t j = 0; j < 32; j++){
         tem = chinese_32[k].dot[4*j + 3];
         tem |= (uint32_t)chinese_32[k].dot[4*j + 2] << 8;
         tem |= (uint32_t)chinese_32[k].dot[4*j + 1] << 16;
         tem |= (uint32_t)chinese_32[k].dot[4*j] << 24;
-        for (uint8_t i = 0; i < 31; i++){
+        for (uint8_t i = 0; i < 32; i++){
             if (tem & 0x80000000){
                 send_16bit_color(font_color);
             }
