@@ -4,6 +4,7 @@
 #include "bsp_spi.h"
 #include "myfunc.h"
 #include "font.h"
+#include "bsp_flash.h"
 
 uint8_t Lcd_txbuffer[10] = {};
 uint8_t Lcd_rxbuffer[10] = {};
@@ -296,9 +297,7 @@ void Lcd_Init(void)
 	delay_ms(120);
 	send_comd(0x29);
 
-    Lcd_Fill(WHITE);
-    Lcd_DrawRectangle(0, 0, 480, 32, GRAY);
-    Lcd_DrawStrMiddle("moewu猫屋主控", 17, 240, 16, c32, overlay, BLACK, GRAY);
+    BSP_Flash_Write(1, 10);
 }
 
 void Lcd_Fill(uint16_t color)

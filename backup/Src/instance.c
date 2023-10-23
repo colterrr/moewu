@@ -5,6 +5,7 @@
 #include "ESP_01s.h"
 #include "lcd.h"
 #include "touch.h"
+#include "ui.h"
 
 #include "bsp_adc.h"
 #include "bsp_uart.h"
@@ -23,5 +24,7 @@ void Instance_Init(void)
     CO2_sensor_Init();
     ESP_Init();
     Lcd_Init();
-    Touch_Init();
+    //Touch_Init();
+
+    UI_InitDraw();
 }
