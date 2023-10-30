@@ -105,6 +105,7 @@ void CO2_set_peroid(uint16_t ms)
 void CO2_sensor_Init(void)
 {
     database.CO2_data_p = &my_CO2_data;
-    database.CO2_sta = data_recv;
+    database.CO2_sta = module_err;
+    my_CO2_data.step = data_recv;
     BSP_UART_registerfunc(CO2_callback ,CO2_PORT);
 }

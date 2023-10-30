@@ -7,6 +7,7 @@
 //参考电压 单位mV
 #define VCC_ref (3300) 
 
+#define UV_NUM 1
 typedef enum UV_index_e
 {
     lv_0 = 0,
@@ -34,6 +35,7 @@ typedef struct UV_data_s
 #pragma pack()
 
 void UV_sensor_Init(void);
-error_handle_type UV_sensor_data_handle(uint16_t* adc_data, UV_data* data_obj);
+error_handle_type UV_sensor_data_handle(UV_data* data_obj);
+void UV_task(void);
 
 #endif

@@ -1,7 +1,7 @@
 #include "UV_sensor.h"
 #include "stdlib.h"
 #include "instance.h"
-
+#include "bsp_adc.h"
 UV_data my_UV_data;
 
 void UV_arr_Create(UV_data* data)
@@ -28,15 +28,16 @@ UV_index judge_index(uint16_t v_now)
     return tem_index;
 }
 
-error_handle_type UV_sensor_data_handle(uint16_t* adc_data, UV_data* data_obj)
+error_handle_type UV_sensor_data_handle(UV_data* data_obj)
 {
     uint16_t i = 0;
     uint16_t num = data_obj->num;
     uint32_t sum_v = 0;
     UV_index* pdata = data_obj->UV_pdata;
+    uint16_t* adc_pdata = BSP_GET_Pdata();
 
     for (i = 0; i < num; i++){
-        uint16_t v_now = VCC_ref * adc_data[i] / 4096;
+        uint16_t v_now = VCC_ref * adc_pdata[i] / 4096;
         pdata[i] = judge_index(v_now);
         sum_v += v_now;
     }
@@ -47,6 +48,13 @@ error_handle_type UV_sensor_data_handle(uint16_t* adc_data, UV_data* data_obj)
 
 void UV_sensor_Init(void)
 {
+    my_UV_data.num = UV_NUM;
     database.UV_data_p = &my_UV_data;
+    database.UV_sta = module_err;
     UV_arr_Create(&my_UV_data);
+}
+
+void UV_task(void)
+{
+    database.UV_sta = UV_sensor_data_handle(&my_UV_data);
 }

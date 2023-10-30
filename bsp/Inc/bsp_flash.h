@@ -9,4 +9,5 @@
 
 void BSP_Flash_Write(uint16_t offset_index, uint8_t data);
 uint8_t BSP_Flash_Read(uint16_t offset_index);
+void BSP_Flash_Clear(void);
 #endif

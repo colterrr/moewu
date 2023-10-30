@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "SHT_sensor.h"
 #include "ui.h"
+#include "UV_sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +70,13 @@ const osThreadAttr_t GUITask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for UVTask */
+osThreadId_t UVTaskHandle;
+const osThreadAttr_t UVTask_attributes = {
+  .name = "UVTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -78,6 +86,7 @@ const osThreadAttr_t GUITask_attributes = {
 void StartDefaultTask(void *argument);
 void StartSht30Task(void *argument);
 void StartGUITask(void *argument);
+void StartTask04(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -116,6 +125,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of GUITask */
   GUITaskHandle = osThreadNew(StartGUITask, NULL, &GUITask_attributes);
+
+  /* creation of UVTask */
+  UVTaskHandle = osThreadNew(StartTask04, NULL, &UVTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -181,9 +193,29 @@ void StartGUITask(void *argument)
   for(;;)
   {
     UI_task();
-    vTaskDelayUntil(&GUI_currentTime, 200);
+    vTaskDelayUntil(&GUI_currentTime, 500);
   }
   /* USER CODE END StartGUITask */
+}
+
+/* USER CODE BEGIN Header_StartTask04 */
+/**
+* @brief Function implementing the UVTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask04 */
+void StartTask04(void *argument)
+{
+  /* USER CODE BEGIN StartTask04 */
+  /* Infinite loop */
+  portTickType UV_currentTime;
+  for(;;)
+  {
+    UV_task();
+    vTaskDelayUntil(&UV_currentTime, 850);
+  }
+  /* USER CODE END StartTask04 */
 }
 
 /* Private application code --------------------------------------------------*/

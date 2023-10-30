@@ -1,5 +1,5 @@
 #include "lcd.h"
-
+#include "stdlib.h"
 #include "gpio.h"
 #include "bsp_spi.h"
 #include "myfunc.h"
@@ -319,6 +319,11 @@ void Lcd_DrawRectangle(uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE, uint1
     NSS_ABORT;
 }
 
+void Lcd_DrawRectangleMiddle(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint16_t color)
+{
+    Lcd_DrawRectangle(x - xlen/2, y - ylen/2, x + xlen/2, y + ylen/2, color);
+}
+
 void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
     uint16_t x_max = 8*size - 1;
@@ -441,6 +446,25 @@ void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uin
         }
     }
     NSS_ABORT;
+}
+
+void Lcd_DrawFloat(float data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
+{
+    uint32_t num = data * pow(10, 2);
+    uint8_t i = 0, k = 0;
+    while(num > (uint32_t)pow(10, i++));
+    uint8_t* str = (uint8_t*)malloc(i);
+    i--;
+    while(k < i-2){
+        str[k] = num / pow(10, i-1-k) + '0';
+        num -= (str[k] - '0') * pow(10, i-1-k);
+        k++;
+    }
+        str[k] = '.';
+        str[k+1] = num / 10 + '0';
+        str[k+2] = num % 10 + '0';        
+        Lcd_DrawStr(str, i+1, x, y, size, mode, font_color, back_color);
+    free(str);
 }
 
 void Lcd_ReadDisplaySta()

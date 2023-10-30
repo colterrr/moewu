@@ -81,11 +81,15 @@ typedef enum Draw_Mode_e
 
 void Lcd_Init(void);
 void Lcd_DrawRectangle(uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE, uint16_t color);
+void Lcd_DrawRectangleMiddle(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint16_t color);
 void Lcd_Fill(uint16_t color);
+
 void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 void Lcd_DrawStr(uint8_t* str, uint8_t len, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 void Lcd_DrawStrMiddle(uint8_t* str, uint8_t len, uint16_t x_middle, uint16_t y_middle, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
+
+void Lcd_DrawFloat(float data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 
 
 void Lcd_ReadDisplaySta();

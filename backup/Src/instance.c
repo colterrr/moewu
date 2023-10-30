@@ -15,16 +15,16 @@ instance database;
 
 void Instance_Init(void)
 {
-    BSP_UART_Init();
     BSP_SPI_Init();
+    BSP_UART_Init();
     BSP_IIC_Init();
+    BSP_ADC_Init();
 
     SHT_sensor_Init();
     UV_sensor_Init();
     CO2_sensor_Init();
     ESP_Init();
     Lcd_Init();
-    //Touch_Init();
-
     UI_InitDraw();
+    //Touch_Init();
 }
