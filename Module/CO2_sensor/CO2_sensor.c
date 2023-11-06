@@ -28,7 +28,7 @@ const uint8_t  middle[9] = {0x70, 0x70, 0x6D, 0x2C, 0x54, 0x56, 0x4F, 0x53, 0x3A
 const uint8_t    tail[3] = {0x70, 0x70, 0x64};                                          //ppd
 
 uint8_t command[20] = {};
-
+uint8_t lost_num = 0;
 CO2_data my_CO2_data;
 
 error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uint16_t len)
@@ -77,6 +77,7 @@ error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uin
 
 void CO2_callback(UART_HandleTypeDef* huart, uint8_t* pdata, uint16_t len)
 {
+    lost_num = 0;
     if (my_CO2_data.step){
         if (memcmp(pdata, "OK", 2) == 0){
             database.CO2_sta = normal;
@@ -108,4 +109,10 @@ void CO2_sensor_Init(void)
     database.CO2_sta = module_err;
     my_CO2_data.step = data_recv;
     BSP_UART_registerfunc(CO2_callback ,CO2_PORT);
+}
+
+void CO2_monitor(void)
+{
+    lost_num += 1;
+    if (lost_num == 3)database.CO2_sta = module_err;
 }

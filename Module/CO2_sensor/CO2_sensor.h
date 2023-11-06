@@ -22,6 +22,7 @@ typedef struct CO2_data_s
 
 void CO2_sensor_Init(void);
 void CO2_set_peroid(uint16_t ms);
+void CO2_monitor(void);
 error_handle_type CO2_sensor_data_handle(CO2_data* data_obj, uint8_t* pdata, uint16_t len);
 
 #endif

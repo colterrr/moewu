@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SHT_sensor.h"
+#include "CO2_sensor.h"
 #include "ui.h"
 #include "UV_sensor.h"
 /* USER CODE END Includes */
@@ -150,9 +151,12 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+  portTickType defaultTime;
+  defaultTime = xTaskGetTickCount();
   for(;;)
   {
-    osDelay(1);
+    CO2_monitor();
+    vTaskDelayUntil(&defaultTime, 1000);
   }
   /* USER CODE END StartDefaultTask */
 }

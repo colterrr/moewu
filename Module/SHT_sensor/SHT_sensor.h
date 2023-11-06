@@ -21,6 +21,7 @@ typedef enum setting_periodic_mode_e
     High_2,
     Medium_2,
     Low_2,
+    
     High_4,
     Medium_4,
     Low_4,

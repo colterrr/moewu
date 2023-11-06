@@ -26,17 +26,26 @@ void BasicData_Show(void)
         Lcd_DrawFloat(database.CO2_data_p->CO2_ppm, 204, 145, c32, merge, BLACK, DEFAULT_COLOR);
     }
     else {
+        Lcd_DrawRectangle(204+80, 145, 350, 145+45, WHITE);
         Lcd_DrawStr("ERROR", 5, 204, 145, c32, merge, RED, DEFAULT_COLOR);
     }
+
     Lcd_DrawStr("紫外线指数:lv", 18, 60, 225, c32, merge, BLACK, WHITE);
     if (database.UV_sta == normal){
         uint8_t tem = database.UV_data_p->aver_lv;
-        if (tem >= 10){
+        if (tem >= 10 && tem <=11){
             uint8_t str[2];
             str[0] = '1';tem -= 10;str[1] = tem + '0';
             Lcd_DrawStr(str, 2, 272, 225, c32, merge, BLACK, DEFAULT_COLOR);
         }
-        else Lcd_DrawChar(tem + '0', 272, 225, c32, merge, BLACK, WHITE);
+        else if (tem == 12){
+            uint8_t str[] = "11+";
+            Lcd_DrawStr(str, 3, 272, 225, c32, merge, BLACK, DEFAULT_COLOR);
+        }
+        else {
+            Lcd_DrawChar(tem + '0', 272, 225, c32, merge, BLACK, WHITE);
+            Lcd_DrawRectangle(272+16, 225, 272+48, 225+32, WHITE);
+        }
     }
     else {
         Lcd_DrawStr("ERROR", 5, 272, 225, c32, merge, RED, DEFAULT_COLOR);

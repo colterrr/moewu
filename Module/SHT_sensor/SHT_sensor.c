@@ -91,7 +91,7 @@ void SHT_sensor_Init(void)
     BSP_IIC_setpara(SHT_PORT_INDEX, GPIOB, GPIO_PIN_6, GPIOB, GPIO_PIN_7, SHT_ADDR);
 
     SHT_arr_Create(&my_SHT_data);
-    SHT_sensor_set_periodic(SHT_PORT_INDEX, Medium_2);
+    database.SHT_sta = SHT_sensor_set_periodic(SHT_PORT_INDEX, Medium_2);
 }
 
 void sht_sensor_task(void)
