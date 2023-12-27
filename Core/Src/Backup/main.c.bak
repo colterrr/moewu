@@ -187,11 +187,6 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  uint8_t aaa;
-  aaa=10;
-}
 /* USER CODE END 4 */
 
 /**

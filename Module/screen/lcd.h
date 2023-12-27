@@ -89,6 +89,7 @@ void Lcd_DrawChar(uint8_t c, uint16_t x, uint16_t y, Font_Size size, Draw_Mode m
 void Lcd_DrawStr(uint8_t* str, uint8_t len, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 void Lcd_DrawStrMiddle(uint8_t* str, uint8_t len, uint16_t x_middle, uint16_t y_middle, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 
+void Lcd_DrawUint(uint32_t data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 void Lcd_DrawFloat(float data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color);
 
 

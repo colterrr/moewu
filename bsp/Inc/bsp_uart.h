@@ -4,7 +4,7 @@
 #include "stdint.h"
 #include "usart.h"
 
-#define ESP_PORT 0 //huart1
+#define RPI_PORT 0 //huart1
 #define CO2_PORT 1 //huart2
 
 #define MAX_BUF_LEN_R 512

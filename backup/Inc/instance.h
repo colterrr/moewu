@@ -28,6 +28,10 @@
 //SPI1 MOSI PA7
 //SPI1 NSS PE7
 
+//PTC
+//htim3 channel 1-4
+//PC6 PC7 PB0 PB1 
+
 // 参数配置
 //SPI1  MSB_first 8_bit_frame
 

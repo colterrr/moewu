@@ -55,5 +55,6 @@ typedef struct fuzzy_pid_type_s
 }fuzzy_pid_type;
 
 void Calc_FuzzyPID(fuzzy_pid_type* obj);
+//void FuzzySetpara(fuzzy_pid_type* obj);
 
 #endif

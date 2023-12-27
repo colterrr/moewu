@@ -4,10 +4,11 @@
 #include "stdint.h"
 #include "tim.h"
 
+//tim3
 //PSC 840-1
 //f_in 1e5
 
-#define PWM_MAX_NUM 1
+#define PWM_MAX_NUM 4
 
 typedef struct BSP_PWM_Type_s
 {

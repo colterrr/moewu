@@ -75,12 +75,13 @@ error_handle_type SHT_sensor_data_handle(uint8_t iic_index, temp_humid_data* dat
 
 void SHT_data_calc(SHT_data* data_obj)
 {
+    float a = 0,b = 0;
     for (uint8_t i = 0; i < data_obj->num; i++){
-        data_obj->aver_data.humidity += (data_obj->pdata_real[i].humidity = ((float)data_obj->pdata[i].humidity / 65535) * 100);
-        data_obj->aver_data.humidity += (data_obj->pdata_real[i].temperature = ((float)data_obj->pdata[i].temperature / 65535) * 175 - 45);
+        a += (data_obj->pdata_real[i].humidity = ((float)data_obj->pdata[i].humidity / 65535) * 100);
+        b += (data_obj->pdata_real[i].temperature = ((float)data_obj->pdata[i].temperature / 65535) * 175 - 45);
     }
-    data_obj->aver_data.humidity /= data_obj->num;
-    data_obj->aver_data.temperature /= data_obj->num;
+    data_obj->aver_data.humidity = a /= data_obj->num;
+    data_obj->aver_data.temperature = b /= data_obj->num;
 }
 
 void SHT_sensor_Init(void)

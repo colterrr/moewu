@@ -6,6 +6,12 @@ void BSP_PWM_Init()
 {
     PWM_Port[0].htim = &htim3;
     PWM_Port[0].channel = TIM_CHANNEL_1;
+    PWM_Port[1].htim = &htim3;
+    PWM_Port[1].channel = TIM_CHANNEL_2;
+    PWM_Port[2].htim = &htim3;
+    PWM_Port[2].channel = TIM_CHANNEL_3;
+    PWM_Port[3].htim = &htim3;
+    PWM_Port[3].channel = TIM_CHANNEL_4;
 }
 
 void BSP_PWM_SetARR(uint8_t index, uint16_t ARR_val)
@@ -22,5 +28,5 @@ void BSP_PWM_Start(uint8_t index)
 }
 void BSP_PWM_Stop(uint8_t index)
 {
-    HAL_TIM_PWM_Start(PWM_Port[index].htim, PWM_Port[index].channel);
+    HAL_TIM_PWM_Stop(PWM_Port[index].htim, PWM_Port[index].channel);
 }

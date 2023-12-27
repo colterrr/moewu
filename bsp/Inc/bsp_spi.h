@@ -16,7 +16,7 @@ typedef struct BSP_SPI_Type_s
 
 #endif
 
-#define MAX_SPI_NUM 1 //使用SPI的设备数量
+#define MAX_SPI_NUM 2 //使用SPI的设备数量
 #define SPI_WAIT_TIME 1 //阻塞模式等待时间 单位ms
 
 #define L_SCK HAL_GPIO_WritePin(GPIOx_SCK, GPIO_Pin_SCK, GPIO_PIN_RESET)

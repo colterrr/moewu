@@ -59,8 +59,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define TOUCH_IT_Pin GPIO_PIN_0
 #define TOUCH_IT_GPIO_Port GPIOC
-#define SPI_NSS_Pin GPIO_PIN_1
-#define SPI_NSS_GPIO_Port GPIOC
+#define TOUCH_IT_EXTI_IRQn EXTI0_IRQn
+#define SPI2_NSS_Pin GPIO_PIN_1
+#define SPI2_NSS_GPIO_Port GPIOC
 #define SPI1_NSS_Pin GPIO_PIN_7
 #define SPI1_NSS_GPIO_Port GPIOE
 #define LCD_LED_Pin GPIO_PIN_8

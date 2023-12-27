@@ -5,8 +5,10 @@
 
 extern instance database;
 interface now_mode;
+error_handle_type last_sta_CO2;
 void BasicData_Show(void)
 {
+    //SHT sensor
     Lcd_DrawStr("温度:", 7, 60, 65, c32, merge, BLACK, WHITE);
     if (database.SHT_sta == normal){
         Lcd_DrawFloat(database.SHT_data_p->pdata_real->temperature, 140, 65, c32, merge, BLACK, DEFAULT_COLOR);
@@ -21,15 +23,20 @@ void BasicData_Show(void)
     else {
         Lcd_DrawStr("ERROR", 5, 320, 65, c32, merge, RED, DEFAULT_COLOR);
     }
-    Lcd_DrawStr("空气质量:", 13, 60, 145, c32, merge, BLACK, WHITE);
+
+    //CO2 sensor
+    Lcd_DrawStr("CO2浓度(ppm):", 15, 60, 145, c32, merge, BLACK, WHITE);
     if (database.CO2_sta == normal){
-        Lcd_DrawFloat(database.CO2_data_p->CO2_ppm, 204, 145, c32, merge, BLACK, DEFAULT_COLOR);
+        if(last_sta_CO2 != normal) Lcd_DrawRectangle(268, 145, 268 + 80, 145 + 32, WHITE);
+        Lcd_DrawUint(database.CO2_data_p->CO2_ppm, 268, 145, c32, merge, BLACK, DEFAULT_COLOR);
+        last_sta_CO2 = normal;
     }
     else {
-        Lcd_DrawRectangle(204+80, 145, 350, 145+45, WHITE);
-        Lcd_DrawStr("ERROR", 5, 204, 145, c32, merge, RED, DEFAULT_COLOR);
+        Lcd_DrawStr("ERROR", 5, 268, 145, c32, merge, RED, DEFAULT_COLOR);
+        last_sta_CO2 = database.CO2_sta;
     }
 
+    //UV sensor
     Lcd_DrawStr("紫外线指数:lv", 18, 60, 225, c32, merge, BLACK, WHITE);
     if (database.UV_sta == normal){
         uint8_t tem = database.UV_data_p->aver_lv;

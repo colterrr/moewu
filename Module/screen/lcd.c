@@ -448,11 +448,26 @@ void Lcd_DrawChinese(uint8_t* index, uint16_t x, uint16_t y, Draw_Mode mode, uin
     NSS_ABORT;
 }
 
+void Lcd_DrawUint(uint32_t data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
+{
+    uint8_t i = 0, k = 0;
+    while(data >= (uint32_t)pow(10, i++));
+    i--;
+    uint8_t* str = (uint8_t*)malloc(i);
+    i--;
+    while (k <= i) {
+        str[i - k] = (data % 10) + '0';
+        data /= 10;
+        k++;
+    }
+    Lcd_DrawStr(str, i+1, x, y, size, mode, font_color, back_color);
+}
+
 void Lcd_DrawFloat(float data, uint16_t x, uint16_t y, Font_Size size, Draw_Mode mode, uint16_t font_color, uint16_t back_color)
 {
     uint32_t num = data * pow(10, 2);
     uint8_t i = 0, k = 0;
-    while(num > (uint32_t)pow(10, i++));
+    while(num >= (uint32_t)pow(10, i++));
     uint8_t* str = (uint8_t*)malloc(i);
     i--;
     while(k < i-2){

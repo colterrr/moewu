@@ -26,8 +26,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SHT_sensor.h"
+#include "CO2_sensor.h"
 #include "ui.h"
 #include "UV_sensor.h"
+#include "respi_send.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,7 +88,7 @@ const osThreadAttr_t UVTask_attributes = {
 void StartDefaultTask(void *argument);
 void StartSht30Task(void *argument);
 void StartGUITask(void *argument);
-void StartTask04(void *argument);
+void StartUVTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -127,7 +129,7 @@ void MX_FREERTOS_Init(void) {
   GUITaskHandle = osThreadNew(StartGUITask, NULL, &GUITask_attributes);
 
   /* creation of UVTask */
-  UVTaskHandle = osThreadNew(StartTask04, NULL, &UVTask_attributes);
+  UVTaskHandle = osThreadNew(StartUVTask, NULL, &UVTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -150,9 +152,14 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+  portTickType defaultTime;
+  defaultTime = xTaskGetTickCount();
   for(;;)
   {
-    osDelay(1);
+    UV_task();
+    CO2_monitor();
+    respi_send();
+    vTaskDelayUntil(&defaultTime, 1000);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -198,24 +205,23 @@ void StartGUITask(void *argument)
   /* USER CODE END StartGUITask */
 }
 
-/* USER CODE BEGIN Header_StartTask04 */
+/* USER CODE BEGIN Header_StartUVTask */
 /**
 * @brief Function implementing the UVTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask04 */
-void StartTask04(void *argument)
+/* USER CODE END Header_StartUVTask */
+void StartUVTask(void *argument)
 {
-  /* USER CODE BEGIN StartTask04 */
+  /* USER CODE BEGIN StartUVTask */
   /* Infinite loop */
   portTickType UV_currentTime;
   for(;;)
   {
-    UV_task();
     vTaskDelayUntil(&UV_currentTime, 850);
   }
-  /* USER CODE END StartTask04 */
+  /* USER CODE END StartUVTask */
 }
 
 /* Private application code --------------------------------------------------*/

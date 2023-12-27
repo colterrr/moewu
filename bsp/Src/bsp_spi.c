@@ -21,7 +21,7 @@ void BSP_SPI_Init(void)
 {
     #if HARDWARE_SPI
     SPI_Port[0].hspi = &hspi1;
-
+    SPI_Port[1].hspi = &hspi2;
     #elif SOFTWARE_SPI
     SPI_Port[0].IOx_SCK = GPIOA;
     SPI_Port[0].Pin_SCK = GPIO_PIN_5;

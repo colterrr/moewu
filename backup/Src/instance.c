@@ -6,10 +6,12 @@
 #include "lcd.h"
 #include "touch.h"
 #include "ui.h"
+#include "ptc.h"
 
 #include "bsp_adc.h"
 #include "bsp_uart.h"
 #include "bsp_spi.h"
+#include "bsp_pwm.h"
 
 instance database;
 
@@ -19,12 +21,14 @@ void Instance_Init(void)
     BSP_UART_Init();
     BSP_IIC_Init();
     BSP_ADC_Init();
+    BSP_PWM_Init();
 
     SHT_sensor_Init();
     UV_sensor_Init();
     CO2_sensor_Init();
-    ESP_Init();
+    // ESP_Init();
     Lcd_Init();
     UI_InitDraw();
+    PTC_Init();
     //Touch_Init();
 }

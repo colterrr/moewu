@@ -29,6 +29,8 @@
 #include "CO2_sensor.h"
 #include "ui.h"
 #include "UV_sensor.h"
+#include "respi_send.h"
+#include "ptc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -71,10 +73,10 @@ const osThreadAttr_t GUITask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for UVTask */
-osThreadId_t UVTaskHandle;
-const osThreadAttr_t UVTask_attributes = {
-  .name = "UVTask",
+/* Definitions for ptcTask */
+osThreadId_t ptcTaskHandle;
+const osThreadAttr_t ptcTask_attributes = {
+  .name = "ptcTask",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
@@ -87,7 +89,7 @@ const osThreadAttr_t UVTask_attributes = {
 void StartDefaultTask(void *argument);
 void StartSht30Task(void *argument);
 void StartGUITask(void *argument);
-void StartTask04(void *argument);
+void StartptcTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -127,8 +129,8 @@ void MX_FREERTOS_Init(void) {
   /* creation of GUITask */
   GUITaskHandle = osThreadNew(StartGUITask, NULL, &GUITask_attributes);
 
-  /* creation of UVTask */
-  UVTaskHandle = osThreadNew(StartTask04, NULL, &UVTask_attributes);
+  /* creation of ptcTask */
+  ptcTaskHandle = osThreadNew(StartptcTask, NULL, &ptcTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -155,7 +157,9 @@ void StartDefaultTask(void *argument)
   defaultTime = xTaskGetTickCount();
   for(;;)
   {
+    UV_task();
     CO2_monitor();
+    respi_send();
     vTaskDelayUntil(&defaultTime, 1000);
   }
   /* USER CODE END StartDefaultTask */
@@ -202,24 +206,24 @@ void StartGUITask(void *argument)
   /* USER CODE END StartGUITask */
 }
 
-/* USER CODE BEGIN Header_StartTask04 */
+/* USER CODE BEGIN Header_StartptcTask */
 /**
-* @brief Function implementing the UVTask thread.
+* @brief Function implementing the ptcTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask04 */
-void StartTask04(void *argument)
+/* USER CODE END Header_StartptcTask */
+void StartptcTask(void *argument)
 {
-  /* USER CODE BEGIN StartTask04 */
+  /* USER CODE BEGIN StartptcTask */
   /* Infinite loop */
-  portTickType UV_currentTime;
+  portTickType GUI_currentTime;
   for(;;)
   {
-    UV_task();
-    vTaskDelayUntil(&UV_currentTime, 850);
+    PTC_update();
+    vTaskDelayUntil(&GUI_currentTime, 500);
   }
-  /* USER CODE END StartTask04 */
+  /* USER CODE END StartptcTask */
 }
 
 /* Private application code --------------------------------------------------*/
